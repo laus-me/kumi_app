@@ -1,14 +1,35 @@
-import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import * as React from 'react';
 
-import "./styles";
+import { Provider } from 'react-redux';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import { homeButton, calendarButton } from './components/TabButtons';
+
+import HomeScreen from './screens/HomeScreen';
+import CalendarScreen from './screens/CalendarScreen';
+
+import { store } from './redux/store';
+
+const BottomTab = createBottomTabNavigator();
 export default function App() {
-  return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    return (
+        <Provider store={store}>
+            <NavigationContainer>
+                <BottomTab.Navigator initialRouteName="HomeScreen">
+                    <BottomTab.Screen
+                        name="HomeScreen"
+                        options={homeButton}
+                        component={HomeScreen}
+                    />
+                    <BottomTab.Screen
+                        name="CalendarScreen"
+                        options={calendarButton}
+                        component={CalendarScreen}
+                    />
+                </BottomTab.Navigator>
+            </NavigationContainer>
+        </Provider>
+    );
+};
