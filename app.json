@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "kumi",
-    "slug": "kumi",
+    "name": "expo",
+    "slug": "expo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -24,8 +22,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      },
-      "package": "app.netlify.poyang31.kumi"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
