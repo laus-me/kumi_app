@@ -1,13 +1,10 @@
 import * as React from "react";
 
-import {withExpoSnack} from "nativewind";
-
-import { View, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { styled } from "nativewind";
 
 import HomeItem from "./HomeItem";
 
-const StyledView = styled(View);
 const StyledFlatList = styled(FlatList);
 
 const data = [
@@ -27,15 +24,13 @@ const HomeItemList = () => {
     );
 
     return (
-        <StyledView className="lg:flex-1 px-3 min-h-0 min-w-0">
-            <StyledFlatList
-                className="bg-white w-full h-full min-h-0 min-w-0 overflow-auto"
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-            />
-        </StyledView>
+        <StyledFlatList
+            className="bg-white w-full h-full min-h-0 min-w-0 overflow-auto"
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+        />
     )
 };
 
-export default withExpoSnack(HomeItemList);
+export default HomeItemList;

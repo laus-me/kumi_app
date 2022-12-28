@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import {withExpoSnack} from "nativewind";
-
 import { Text, View } from "react-native";
 import { styled } from "nativewind";
 
@@ -15,4 +13,5 @@ const CalendarScreen = () => {
         </StyledView>
     );
 };
-export default withExpoSnack(CalendarScreen);
+
+export default CalendarScreen;

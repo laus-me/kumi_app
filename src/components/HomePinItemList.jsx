@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import {withExpoSnack} from "nativewind";
-
 import { Text, View, FlatList } from "react-native";
 import {styled} from "nativewind";
 
@@ -27,18 +25,16 @@ const HomePinItemList = () => {
         <HomeItem title={item.title} />
     );
 
-    return (
-        <StyledView className="bg-white px-3 py-5">
-            <StyledView className="mb-2">
-                <StyledText>版上釘釘</StyledText>
-            </StyledView>
-            <StyledFlatList
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-            />
+    return (<>
+        <StyledView className="mb-2">
+            <StyledText>版上釘釘</StyledText>
         </StyledView>
-    )
+        <StyledFlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+        />
+    </>)
 };
 
-export default withExpoSnack(HomePinItemList);
+export default HomePinItemList;
