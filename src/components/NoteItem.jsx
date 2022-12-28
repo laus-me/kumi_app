@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 
-import {Text, View, TouchableOpacity} from "react-native";
+import {View, Text, TouchableOpacity} from "react-native";
 import {styled} from "nativewind";
 
 import {
@@ -24,7 +24,7 @@ const NoteItem = (props) => {
         navigation,
     } = props;
 
-    const onCirclePressed = () => {
+    const handlePressCircle = () => {
         navigation.navigate(
             id === 0
                 ? "NoteCreateScreen"
@@ -32,7 +32,7 @@ const NoteItem = (props) => {
         )
     }
 
-    const onBarPressed = () => {
+    const handlePressBar = () => {
         navigation.navigate(
             id === 0
                 ? "NoteCreateScreen"
@@ -46,7 +46,7 @@ const NoteItem = (props) => {
         >
             <StyledTouchableOpacity
                 className="flex-none w-10 mr-3 cursor-pointer"
-                onPress={onCirclePressed}
+                onPress={handlePressCircle}
             >
                 {
                     isResolved ?
@@ -56,7 +56,7 @@ const NoteItem = (props) => {
             </StyledTouchableOpacity>
             <StyledTouchableOpacity
                 className="grow select-none cursor-pointer"
-                onPress={onBarPressed}
+                onPress={handlePressBar}
             >
                 <StyledView>
                     <StyledText className="text-black">

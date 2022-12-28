@@ -19,6 +19,7 @@
     "@react-navigation/stack": "^6.3.10",
     "@reduxjs/toolkit": "^1.9.1",
     "classnames": "^2.3.2",
+    "dayjs": "^1.11.7",
     "eslint-config-google": "^0.14.0",
     "expo": "46.0.8",
     "expo-status-bar": "1.4.0",

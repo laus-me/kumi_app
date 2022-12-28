@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Text, View, FlatList} from "react-native";
+import {View, Text, FlatList} from "react-native";
 import {styled} from "nativewind";
 
 import NoteItem from "./NoteItem";

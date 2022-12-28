@@ -24,9 +24,21 @@ export const optionCalendarScreen = {
     ),
 };
 
+const extractDate = (date) => ({
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDay(),
+})
+
 export const CalendarScreen = () => {
     const renderHeader = (date) => {
-        return <StyledText>{JSON.stringify(date)}</StyledText>
+        const {year, month} = extractDate(date);
+
+        return (
+            <StyledText className="mt-2 mb-3">
+                {year} 年 {month} 月
+            </StyledText>
+        )
     };
 
     const renderArrow= (direction) => direction === 'left'

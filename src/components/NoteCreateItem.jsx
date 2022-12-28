@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Text, View, TouchableOpacity} from "react-native";
+import {View, Text, TouchableOpacity} from "react-native";
 import {styled} from "nativewind";
 
 import {
@@ -14,14 +14,14 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const NoteCreateItem = (props) => {
     const { navigation } = props;
 
-    const onPressHandler = () => {
+    const handlePress = () => {
         navigation.navigate("NoteCreateStack");
     };
 
     return (
         <StyledTouchableOpacity
             className="flex px-5 py-3 hover:bg-gray-100 w-full flex-row"
-            onPress={onPressHandler}
+            onPress={handlePress}
         >
             <StyledView
                 className="flex-none w-10 mr-3 cursor-pointer"
