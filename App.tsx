@@ -5,12 +5,12 @@ import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { homeButton, calendarButton } from './components/TabButtons';
+import { homeButton, calendarButton } from './src/components/TabButtons';
 
-import HomeScreen from './screens/HomeScreen';
-import CalendarScreen from './screens/CalendarScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import CalendarScreen from './src/screens/CalendarScreen';
 
-import { store } from './redux/store';
+import { store } from './src/redux/store';
 
 const BottomTab = createBottomTabNavigator();
 export default function App() {

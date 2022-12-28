@@ -1,9 +1,9 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { withExpoSnack } from 'nativewind';
+import {withExpoSnack} from "nativewind";
 
-import { Text, View } from 'react-native';
-import { styled } from 'nativewind';
+import { Text, View } from "react-native";
+import { styled } from "nativewind";
 
 const StyledView = styled(View)
 const StyledText = styled(Text)
