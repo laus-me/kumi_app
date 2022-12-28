@@ -13,7 +13,7 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
-const HomeItem = (props) => {
+const NoteItem = (props) => {
     const {
         id,
         title,
@@ -81,7 +81,7 @@ const HomeItem = (props) => {
     );
 };
 
-HomeItem.propTypes = {
+NoteItem.propTypes = {
     title: PropTypes.string,
     isResolved: PropTypes.bool,
     isNotificationEnabled: PropTypes.bool,
@@ -89,4 +89,4 @@ HomeItem.propTypes = {
     notificationEnd: PropTypes.number,
 };
 
-export default HomeItem;
+export default NoteItem;

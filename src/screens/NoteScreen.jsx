@@ -4,14 +4,14 @@ import classnames from "classnames";
 import {View} from "react-native";
 import {styled} from "nativewind";
 
-import HomePinItemList from "../components/HomePinItemList";
-import HomeItemList from "../components/HomeItemList";
+import NotePinItemList from "../components/NotePinItemList";
+import NoteItemList from "../components/NoteItemList";
 
 const StyledView = styled(View);
 
 const isPinItemExists = false;
 
-export const HomeScreen = ({navigation}) => {
+export const NoteScreen = ({navigation}) => {
     const classNameHomeItemList = classnames({
         "min-h-0": true,
         "min-w-0": true,
@@ -22,13 +22,13 @@ export const HomeScreen = ({navigation}) => {
     return (<>
         {isPinItemExists && (
             <StyledView className="bg-white px-3 py-5 mb-3">
-                <HomePinItemList navigation={navigation} />
+                <NotePinItemList navigation={navigation} />
             </StyledView>
         )}
         <StyledView className={classNameHomeItemList}>
-            <HomeItemList navigation={navigation} />
+            <NoteItemList navigation={navigation} />
         </StyledView>
     </>);
 };
 
-export default HomeScreen;
+export default NoteScreen;

@@ -3,32 +3,39 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import { homeButton, calendarButton } from './src/components/TabButtons';
-
-import HomeStack from './src/stacks/HomeStack';
-import CalendarScreen from './src/screens/CalendarScreen';
+import {createStackNavigator} from "@react-navigation/stack";
 
 import { store } from './src/redux/store';
 
-const BottomTab = createBottomTabNavigator();
+import HomeStack from "./src/stacks/HomeStack";
+import NoteCreateStack from "./src/stacks/NoteCreateStack";
+import NoteModifyScreen from "./src/stacks/NoteModifyScreen";
+
+const Stack = createStackNavigator();
+
+const optionHomeStack = {
+    headerShown: false
+};
+
 export default function App() {
     return (
         <Provider store={store}>
             <NavigationContainer>
-                <BottomTab.Navigator initialRouteName="HomeScreen">
-                    <BottomTab.Screen
+                <Stack.Navigator>
+                    <Stack.Screen
                         name="HomeStack"
-                        options={homeButton}
+                        options={optionHomeStack}
                         component={HomeStack}
                     />
-                    <BottomTab.Screen
-                        name="CalendarScreen"
-                        options={calendarButton}
-                        component={CalendarScreen}
+                    <Stack.Screen
+                        name="NoteCreateStack"
+                        component={NoteCreateStack}
                     />
-                </BottomTab.Navigator>
+                    <Stack.Screen
+                        name="NoteModifyScreen"
+                        component={NoteModifyScreen}
+                    />
+                </Stack.Navigator>
             </NavigationContainer>
         </Provider>
     );

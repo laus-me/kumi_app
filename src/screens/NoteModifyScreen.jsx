@@ -6,7 +6,7 @@ import {styled} from "nativewind";
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-const CalendarScreen = () => {
+const NoteModifyScreen = () => {
     return (
         <StyledView
             className="container h-12 justify-center bg-slate-300 items-center"
@@ -18,4 +18,4 @@ const CalendarScreen = () => {
     );
 };
 
-export default CalendarScreen;
+export default NoteModifyScreen;

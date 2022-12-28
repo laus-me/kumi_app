@@ -3,7 +3,7 @@ import * as React from "react";
 import {FlatList} from "react-native";
 import {styled} from "nativewind";
 
-import HomeItem from "./HomeItem";
+import NoteItem from "./NoteItem";
 
 const StyledFlatList = styled(FlatList);
 
@@ -18,9 +18,9 @@ const data = [
     },
 ];
 
-const HomeItemList = ({navigation}) => {
+const NoteItemList = ({navigation}) => {
     const renderItem = ({item}) => (
-        <HomeItem title={item.title} navigation={navigation} />
+        <NoteItem title={item.title} navigation={navigation} />
     );
 
     return (
@@ -33,4 +33,4 @@ const HomeItemList = ({navigation}) => {
     );
 };
 
-export default HomeItemList;
+export default NoteItemList;

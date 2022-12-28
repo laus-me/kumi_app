@@ -3,7 +3,7 @@ import * as React from "react";
 import {Text, View, FlatList} from "react-native";
 import {styled} from "nativewind";
 
-import HomeItem from "./HomeItem";
+import NoteItem from "./NoteItem";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -20,9 +20,9 @@ const data = [
     },
 ];
 
-const HomePinItemList = ({navigation}) => {
+const NotePinItemList = ({navigation}) => {
     const renderItem = ({item}) => (
-        <HomeItem title={item.title} navigation={navigation} />
+        <NoteItem title={item.title} navigation={navigation} />
     );
 
     return (<>
@@ -37,4 +37,4 @@ const HomePinItemList = ({navigation}) => {
     </>);
 };
 
-export default HomePinItemList;
+export default NotePinItemList;

@@ -1,8 +1,9 @@
-import {combineReducers, createStore} from "redux";
-import CountReducer from "./reducers/countReducer";
+import {configureStore} from "@reduxjs/toolkit";
 
-const rootReducer = combineReducers({
-    count: CountReducer,
+import {homeRoot} from "./reducers/HomeRootReducer";
+
+export const store = configureStore({
+    reducer: {
+        homeRoot,
+    }
 });
-
-export const store = createStore(rootReducer);

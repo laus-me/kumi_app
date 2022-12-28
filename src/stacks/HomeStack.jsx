@@ -1,34 +1,51 @@
 import * as React from "react";
-import {createStackNavigator} from "@react-navigation/stack";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
-import HomeScreen from "../screens/HomeScreen";
-import NoteCreateScreen from "../screens/NoteCreateScreen";
-import NoteModifyScreen from "../screens/NoteModifyScreen";
+import NoteScreen from "../screens/NoteScreen";
+import CalendarScreen from "../screens/CalendarScreen";
 
-const Stack = createStackNavigator();
+import {
+    HomeIcon,
+    CalendarIcon,
+} from "react-native-heroicons/outline";
 
-const screenOption = {
-    headerShown: false,
+const BottomTab = createBottomTabNavigator();
+
+const optionNoteScreen = {
+    title: "清單",
+    tabBarIcon: ({color, size}) => (
+        <HomeIcon
+            name="home-icon"
+            color={color}
+            size={size}
+        />
+    ),
+};
+
+const optionCalendarScreen = {
+    title: "日曆",
+    tabBarIcon: ({color, size}) => (
+        <CalendarIcon
+            name="calendar-icon"
+            color={color}
+            size={size}
+        />
+    ),
 };
 
 export default function HomeStack() {
     return (
-        <Stack.Navigator initialRouteName="HomeScreen">
-            <Stack.Screen
-                name="HomeScreen"
-                component={HomeScreen}
-                options={screenOption}
+        <BottomTab.Navigator>
+            <BottomTab.Screen
+                name="NoteScreen"
+                options={optionNoteScreen}
+                component={NoteScreen}
             />
-            <Stack.Screen
-                name="NoteCreateScreen"
-                component={NoteCreateScreen}
-                options={screenOption}
+            <BottomTab.Screen
+                name="CalendarScreen"
+                options={optionCalendarScreen}
+                component={CalendarScreen}
             />
-            <Stack.Screen
-                name="NoteModifyScreen"
-                component={NoteModifyScreen}
-                options={screenOption}
-            />
-        </Stack.Navigator>
+        </BottomTab.Navigator>
     );
 }
