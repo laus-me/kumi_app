@@ -1,23 +1,26 @@
+import SnowflakeId from "snowflake-id";
+
 import {newDataHandlers} from "./utils";
 
-const keyPrefix = "note_storage";
+const {read, write} = newDataHandlers("note_storage");
 
-const {
-    reader,
-    writer,
-    remover,
-} = newDataHandlers(keyPrefix);
+const snowflake = new SnowflakeId();
+const noteKey = "notes";
 
-const getCurrentIndex = () => {
-    return 0;
+export const getAllNotes = () => {
+    const data = read(noteKey);
+    return data || {};
 };
 
-export const addItem = async (item) => {
+export const addNote = async (item) => {
+    const prevState = await read(noteKey);
+    const itemId = item.id || snowflake.generate();
+    const state = {...prevState, [itemId]: item};
+    await write(noteKey, state);
 };
 
-export const findItem = async (itemIndex) => {
-};
-
-export const removeItem = async (itemIndex) => {
-
+export const removeNote = async (itemId) => {
+    const prevState = await read(noteKey);
+    const state = prevState.filter((i) => i.id !== itemId);
+    await write(noteKey, state);
 };

@@ -7,15 +7,11 @@ import {createStackNavigator} from "@react-navigation/stack";
 
 import { store } from './src/redux/store';
 
-import HomeStack from "./src/stacks/HomeStack";
-import NoteCreateStack from "./src/stacks/NoteCreateStack";
-import NoteModifyScreen from "./src/stacks/NoteModifyScreen";
+import {HomeStack, optionHomeStack} from "./src/stacks/HomeStack";
+import {NoteCreateStack, optionNoteCreateStack} from "./src/stacks/NoteCreateStack";
+import {NoteModifyStack, optionNoteModifyStack} from "./src/stacks/NoteModifyScreen";
 
 const Stack = createStackNavigator();
-
-const optionHomeStack = {
-    headerShown: false
-};
 
 export default function App() {
     return (
@@ -29,11 +25,13 @@ export default function App() {
                     />
                     <Stack.Screen
                         name="NoteCreateStack"
+                        options={optionNoteCreateStack}
                         component={NoteCreateStack}
                     />
                     <Stack.Screen
-                        name="NoteModifyScreen"
-                        component={NoteModifyScreen}
+                        name="NoteModifyStack"
+                        options={optionNoteModifyStack}
+                        component={NoteModifyStack}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

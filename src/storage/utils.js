@@ -1,22 +1,24 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const newDataReader = (keyPrefix) => (key) => {
-    const storageKey = [keyPrefix, key].join("_");
-    return JSON.parse(AsyncStorage.getItem(storageKey));
+const getStorageKey = (...keys) => keys.join("_")
+
+export const newDataReader = (keyPrefix) => async (key) => {
+    const storageKey = getStorageKey(keyPrefix, key);
+    return JSON.parse(await AsyncStorage.getItem(storageKey));
 };
 
 export const newDataWriter = (keyPrefix) => (key, value) => {
-    const storageKey = [keyPrefix, key].join("_");
+    const storageKey = getStorageKey(keyPrefix, key);
     return AsyncStorage.setItem(storageKey, JSON.stringify(value));
 };
 
 export const newDataRemover = (keyPrefix) => (key) => {
-    const storageKey = [keyPrefix, key].join("_");
+    const storageKey = getStorageKey(keyPrefix, key);
     return AsyncStorage.removeItem(storageKey);
 };
 
 export const newDataHandlers = (keyPrefix) => ({
-    reader: newDataReader(keyPrefix),
-    writer: newDataWriter(keyPrefix),
-    remover: newDataRemover(keyPrefix),
+    read: newDataReader(keyPrefix),
+    write: newDataWriter(keyPrefix),
+    remove: newDataRemover(keyPrefix),
 });

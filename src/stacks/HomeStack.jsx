@@ -1,39 +1,16 @@
 import * as React from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
-import NoteScreen from "../screens/NoteScreen";
-import CalendarScreen from "../screens/CalendarScreen";
-
-import {
-    HomeIcon,
-    CalendarIcon,
-} from "react-native-heroicons/outline";
+import {NoteScreen, optionNoteScreen} from "../screens/NoteScreen";
+import {CalendarScreen, optionCalendarScreen} from "../screens/CalendarScreen";
 
 const BottomTab = createBottomTabNavigator();
 
-const optionNoteScreen = {
-    title: "清單",
-    tabBarIcon: ({color, size}) => (
-        <HomeIcon
-            name="home-icon"
-            color={color}
-            size={size}
-        />
-    ),
+export const optionHomeStack = {
+    headerShown: false
 };
 
-const optionCalendarScreen = {
-    title: "日曆",
-    tabBarIcon: ({color, size}) => (
-        <CalendarIcon
-            name="calendar-icon"
-            color={color}
-            size={size}
-        />
-    ),
-};
-
-export default function HomeStack() {
+export const HomeStack = () => {
     return (
         <BottomTab.Navigator>
             <BottomTab.Screen

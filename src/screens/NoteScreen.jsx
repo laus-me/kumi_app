@@ -7,9 +7,23 @@ import {styled} from "nativewind";
 import NotePinItemList from "../components/NotePinItemList";
 import NoteItemList from "../components/NoteItemList";
 
+import {HomeIcon} from "react-native-heroicons/outline";
+
 const StyledView = styled(View);
 
 const isPinItemExists = false;
+
+export
+const optionNoteScreen = {
+    title: "清單",
+    tabBarIcon: ({color, size}) => (
+        <HomeIcon
+            name="home-icon"
+            color={color}
+            size={size}
+        />
+    ),
+};
 
 export const NoteScreen = ({navigation}) => {
     const classNameHomeItemList = classnames({
@@ -30,5 +44,3 @@ export const NoteScreen = ({navigation}) => {
         </StyledView>
     </>);
 };
-
-export default NoteScreen;
