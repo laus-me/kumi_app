@@ -12,7 +12,7 @@ export const getAllNotes = () => {
     return data || {};
 };
 
-export const addNote = async (item) => {
+export const setNote = async (item) => {
     const prevState = await read(noteKey);
     const itemId = item.id || snowflake.generate();
     const state = {...prevState, [itemId]: item};

@@ -1,7 +1,9 @@
-import React, {useRef, useState} from "react"
+import React, {useState} from "react"
 
 import {View, Text, TextInput, Button} from "react-native";
 import {styled} from "nativewind";
+
+import {setNote, removeNote} from "../storage/NoteStorage";
 
 import {
     CalendarIcon,
@@ -75,24 +77,42 @@ function TextBox(props) {
 }
 
 const NoteEditorScreen = (props) => {
-    const {currentItem} = props;
+    const {
+        currentItem,
+        navigation: {
+            goBack
+        }
+    } = props;
 
-    const focusModalButtonRef = useRef(null);
     const [title, setTitle] = useState(currentItem.title || "");
-    const [enabledNotification, setEnabledNotification] = useState(currentItem.enabledNotification || false);
+    const [isNotificationEnabled, setNotificationEnabled] = useState(currentItem.isNotificationEnabled || false);
+    const [enabledPin, setEnabledPin] = useState(currentItem.enabledPin || false);
     const [notificationStart, setNotificationStart] = useState(currentItem.notificationStart || "");
     const [notificationEnd, setNotificationEnd] = useState(currentItem.notificationEnd || "");
     const [description, setDescription] = useState(currentItem.description || "");
-    const [enabledPin, setEnabledPin] = useState(currentItem.enabledPin || false);
     const [warning, setWarning] = useState("");
 
     const handleSave = () => {
+        const item = {
+            title,
+            isNotificationEnabled,
+            notificationStart,
+            notificationEnd,
+        };
+        if (Object.prototype.hasOwnProperty.call(currentItem, "id")) {
+            const {id: itemId} = currentItem;
+            item["id"] = itemId;
+        }
+        setNote(item).then(() => goBack());
     };
 
     const handleDelete = () => {
+        const {id: itemId} = currentItem;
+        removeNote(itemId).then(() => goBack());
     };
 
     const handleCancel = () => {
+        goBack();
     };
 
     return (
@@ -115,11 +135,11 @@ const NoteEditorScreen = (props) => {
                     <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
                         <Switcher
                             name="啟用提醒"
-                            value={enabledNotification}
-                            setValue={setEnabledNotification}
+                            value={isNotificationEnabled}
+                            setValue={setNotificationEnabled}
                         />
                     </StyledView>
-                    {enabledNotification && (
+                    {isNotificationEnabled && (
                         <StyledView>
                             <DateSelector
                                 name="開始提醒時間"
@@ -154,22 +174,21 @@ const NoteEditorScreen = (props) => {
                 <StyledButton
                     title="儲存"
                     color="black"
-                    onClick={handleSave}
+                    onPress={handleSave}
                 />
                 {
                     currentItem.id && (
                         <StyledButton
                             title="刪除"
                             color="red"
-                            onClick={handleDelete}
+                            onPress={handleDelete}
                         />
                     )
                 }
                 <StyledButton
                     title="取消"
                     color="gray"
-                    onClick={handleCancel}
-                    ref={focusModalButtonRef}
+                    onPress={handleCancel}
                 />
             </StyledView>
         </StyledView>

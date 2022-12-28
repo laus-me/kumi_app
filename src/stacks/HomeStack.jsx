@@ -7,7 +7,8 @@ import {CalendarScreen, optionCalendarScreen} from "../screens/CalendarScreen";
 const BottomTab = createBottomTabNavigator();
 
 export const optionHomeStack = {
-    headerShown: false
+    title: "首頁",
+    headerShown: false,
 };
 
 export const HomeStack = () => {
