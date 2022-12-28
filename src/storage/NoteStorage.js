@@ -5,7 +5,7 @@ const keyPrefix = "note_storage";
 const {
     reader,
     writer,
-    remover
+    remover,
 } = newDataHandlers(keyPrefix);
 
 const getCurrentIndex = () => {

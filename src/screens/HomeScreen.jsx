@@ -1,6 +1,7 @@
 import * as React from "react";
+import classnames from "classnames";
 
-import { View } from "react-native";
+import {View} from "react-native";
 import {styled} from "nativewind";
 
 import HomePinItemList from "../components/HomePinItemList";
@@ -8,15 +9,26 @@ import HomeItemList from "../components/HomeItemList";
 
 const StyledView = styled(View);
 
-export const HomeScreen = () => {
+const isPinItemExists = false;
+
+export const HomeScreen = ({navigation}) => {
+    const classNameHomeItemList = classnames({
+        "min-h-0": true,
+        "min-w-0": true,
+        "px-3": isPinItemExists,
+        "lg:flex-1": true,
+    })
+
     return (<>
-        <StyledView className="bg-white px-3 py-5">
-            <HomePinItemList />
+        {isPinItemExists && (
+            <StyledView className="bg-white px-3 py-5 mb-3">
+                <HomePinItemList navigation={navigation} />
+            </StyledView>
+        )}
+        <StyledView className={classNameHomeItemList}>
+            <HomeItemList navigation={navigation} />
         </StyledView>
-        <StyledView className="lg:flex-1 px-3 min-h-0 min-w-0">
-            <HomeItemList />
-        </StyledView>
-    </>)
-}
+    </>);
+};
 
 export default HomeScreen;

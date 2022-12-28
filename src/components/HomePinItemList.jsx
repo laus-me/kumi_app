@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Text, View, FlatList } from "react-native";
+import {Text, View, FlatList} from "react-native";
 import {styled} from "nativewind";
 
 import HomeItem from "./HomeItem";
@@ -16,13 +16,13 @@ const data = [
         isResolved: true,
         isNotificationEnabled: false,
         notificationStart: 1000000,
-        notificationEnd: 10000000
-    }
+        notificationEnd: 10000000,
+    },
 ];
 
-const HomePinItemList = () => {
-    const renderItem = ({ item }) => (
-        <HomeItem title={item.title} />
+const HomePinItemList = ({navigation}) => {
+    const renderItem = ({item}) => (
+        <HomeItem title={item.title} navigation={navigation} />
     );
 
     return (<>
@@ -32,9 +32,9 @@ const HomePinItemList = () => {
         <StyledFlatList
             data={data}
             renderItem={renderItem}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id}
         />
-    </>)
+    </>);
 };
 
 export default HomePinItemList;

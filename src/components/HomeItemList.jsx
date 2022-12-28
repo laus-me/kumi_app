@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { FlatList } from "react-native";
-import { styled } from "nativewind";
+import {FlatList} from "react-native";
+import {styled} from "nativewind";
 
 import HomeItem from "./HomeItem";
 
@@ -14,13 +14,13 @@ const data = [
         isResolved: false,
         isNotificationEnabled: false,
         notificationStart: 1000000,
-        notificationEnd: 10000000
-    }
+        notificationEnd: 10000000,
+    },
 ];
 
-const HomeItemList = () => {
-    const renderItem = ({ item }) => (
-        <HomeItem title={item.title} />
+const HomeItemList = ({navigation}) => {
+    const renderItem = ({item}) => (
+        <HomeItem title={item.title} navigation={navigation} />
     );
 
     return (
@@ -28,9 +28,9 @@ const HomeItemList = () => {
             className="bg-white w-full h-full min-h-0 min-w-0 overflow-auto"
             data={data}
             renderItem={renderItem}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id}
         />
-    )
+    );
 };
 
 export default HomeItemList;

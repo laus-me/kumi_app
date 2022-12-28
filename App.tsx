@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { homeButton, calendarButton } from './src/components/TabButtons';
 
-import HomeScreen from './src/screens/HomeScreen';
+import HomeStack from './src/stacks/HomeStack';
 import CalendarScreen from './src/screens/CalendarScreen';
 
 import { store } from './src/redux/store';
@@ -19,9 +19,9 @@ export default function App() {
             <NavigationContainer>
                 <BottomTab.Navigator initialRouteName="HomeScreen">
                     <BottomTab.Screen
-                        name="HomeScreen"
+                        name="HomeStack"
                         options={homeButton}
-                        component={HomeScreen}
+                        component={HomeStack}
                     />
                     <BottomTab.Screen
                         name="CalendarScreen"

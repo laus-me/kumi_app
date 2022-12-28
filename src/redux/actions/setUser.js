@@ -3,7 +3,7 @@ export const setUser = (user) => {
         type: "LOGIN",
         payload: {
             username: user.name,
-            password: user.password
-        }
-    }
-}
+            password: user.password,
+        },
+    };
+};

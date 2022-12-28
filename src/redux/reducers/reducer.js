@@ -1,6 +1,6 @@
 const initialState = {
     username: "",
-    password: ""
+    password: "",
 };
 
 export const loggeduser = (state = initialState, action) => {
@@ -8,7 +8,7 @@ export const loggeduser = (state = initialState, action) => {
     case "LOGIN":
         return {
             username: action.payload.username,
-            password: action.payload.password
+            password: action.payload.password,
         };
     default:
         return state;

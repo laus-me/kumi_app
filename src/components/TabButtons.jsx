@@ -6,22 +6,22 @@ import {
 
 export const homeButton = {
     title: "首頁 ",
-    tabBarIcon: ({ color, size }) => (
+    tabBarIcon: ({color, size}) => (
         <HomeIcon
             name="home-icon"
             color={color}
             size={size}
         />
-    )
+    ),
 };
 
 export const calendarButton = {
     title: "日曆 ",
-    tabBarIcon: ({ color, size }) => (
+    tabBarIcon: ({color, size}) => (
         <CalendarIcon
             name="calendar-icon"
             color={color}
             size={size}
         />
-    )
+    ),
 };
