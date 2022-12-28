@@ -1,6 +1,6 @@
 import SnowflakeId from "snowflake-id";
 
-import {newDataHandlers} from "./utils";
+import {newDataHandlers} from "./index";
 
 const {read, write} = newDataHandlers("note_storage");
 

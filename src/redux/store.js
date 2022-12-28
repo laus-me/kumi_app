@@ -1,9 +1,9 @@
 import {configureStore} from "@reduxjs/toolkit";
 
-import {homeRoot} from "./reducers/HomeRootReducer";
+import {appRoot} from "./reducers/AppRootReducer";
 
 export const store = configureStore({
     reducer: {
-        homeRoot,
+        appRoot,
     }
 });

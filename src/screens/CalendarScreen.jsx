@@ -49,14 +49,14 @@ export const CalendarScreen = () => {
         <StyledView>
             <Calendar
                 onDayPress={day => {
-                    console.log('selected day', day);
+                    console.info('selected day', day);
                 }}
                 onDayLongPress={day => {
-                    console.log('selected day', day);
+                    console.info('selected day', day);
                 }}
                 monthFormat={'yyyy MM'}
                 onMonthChange={month => {
-                    console.log('month changed', month);
+                    console.info('month changed', month);
                 }}
                 renderHeader={renderHeader}
                 renderArrow={renderArrow}
