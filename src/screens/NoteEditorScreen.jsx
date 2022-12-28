@@ -2,6 +2,7 @@ import React, {useState} from "react"
 
 import {View, Text, TextInput, Button} from "react-native";
 import {styled} from "nativewind";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 import {setNote, removeNote} from "../storage/NoteStorage";
 
@@ -14,7 +15,7 @@ const StyledText = styled(Text);
 const StyledTextInput = styled(TextInput);
 const StyledButton = styled(Button);
 
-function InputBox(props) {
+const InputBox = (props) => {
     const {name, placeholder, value, setValue} = props;
     return (
         <StyledView>
@@ -30,7 +31,7 @@ function InputBox(props) {
     );
 }
 
-function DateSelector(props) {
+const DateSelector = (props) => {
     const {name, value, setValue} = props;
     return (
         <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
@@ -51,11 +52,28 @@ function DateSelector(props) {
     );
 }
 
-function Switcher() {
-    return (<></>);
+const Switcher = (props) => {
+    const {
+        name,
+        value,
+        setValue,
+    } = props;
+
+    const textStyle = {
+        textDecorationLine: "none",
+    };
+
+    return (
+        <BouncyCheckbox
+            text={name}
+            isChecked={value}
+            onPress={setValue}
+            textStyle={textStyle}
+        />
+    );
 }
 
-function TextBox(props) {
+const TextBox = (props) => {
     const {name, placeholder, value, setValue} = props;
     return (
         <StyledView>
@@ -84,26 +102,39 @@ const NoteEditorScreen = (props) => {
         }
     } = props;
 
-    const [title, setTitle] = useState(currentItem.title || "");
-    const [isNotificationEnabled, setNotificationEnabled] = useState(currentItem.isNotificationEnabled || false);
-    const [enabledPin, setEnabledPin] = useState(currentItem.enabledPin || false);
-    const [notificationStart, setNotificationStart] = useState(currentItem.notificationStart || "");
-    const [notificationEnd, setNotificationEnd] = useState(currentItem.notificationEnd || "");
-    const [description, setDescription] = useState(currentItem.description || "");
     const [warning, setWarning] = useState("");
+
+    const {
+        title: cTitle,
+        isNotificationEnabled: cIsNotificationEnabled,
+        isPinEnabled: cIsPinEnabled,
+        notificationStart: cNotificationStart,
+        notificationEnd: cNotificationEnd,
+        description: cDescription,
+    } = currentItem;
+
+    const [title, setTitle] = useState(cTitle || "");
+    const [isPinEnabled, setPinEnabled] = useState(cIsPinEnabled || false);
+    const [isNotificationEnabled, setNotificationEnabled] = useState(cIsNotificationEnabled || false);
+    const [notificationStart, setNotificationStart] = useState(cNotificationStart || "");
+    const [notificationEnd, setNotificationEnd] = useState(cNotificationEnd || "");
+    const [description, setDescription] = useState(cDescription || "");
 
     const handleSave = () => {
         const item = {
             title,
+            isPinEnabled,
             isNotificationEnabled,
             notificationStart,
             notificationEnd,
+            description,
         };
         if (Object.prototype.hasOwnProperty.call(currentItem, "id")) {
             const {id: itemId} = currentItem;
             item["id"] = itemId;
         }
-        setNote(item).then(() => goBack());
+        setNote(item)
+            .then(() => goBack());
     };
 
     const handleDelete = () => {
@@ -164,8 +195,8 @@ const NoteEditorScreen = (props) => {
                     <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
                         <Switcher
                             name="成為板上釘釘"
-                            value={enabledPin}
-                            setValue={setEnabledPin}
+                            value={isPinEnabled}
+                            setValue={setPinEnabled}
                         />
                     </StyledView>
                 </StyledView>
