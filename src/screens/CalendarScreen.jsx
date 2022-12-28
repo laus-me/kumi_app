@@ -2,8 +2,13 @@ import * as React from "react";
 
 import {Text, View} from "react-native";
 import {styled} from "nativewind";
+import {Calendar} from 'react-native-calendars';
 
-import {CalendarIcon} from "react-native-heroicons/outline";
+import {
+    ArrowLeftIcon,
+    ArrowRightIcon,
+    CalendarIcon,
+} from "react-native-heroicons/outline";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -20,13 +25,42 @@ export const optionCalendarScreen = {
 };
 
 export const CalendarScreen = () => {
+    const renderHeader = (date) => {
+        return <StyledText>{JSON.stringify(date)}</StyledText>
+    };
+
+    const renderArrow= (direction) => direction === 'left'
+        ? <ArrowLeftIcon color="#000" />
+        : <ArrowRightIcon color="#000" />;
+
     return (
-        <StyledView
-            className="container h-12 justify-center bg-slate-300 items-center"
-        >
-            <StyledText className="text-slate-800">
-                Try resizing me! 🎉
-            </StyledText>
+        <StyledView>
+            <Calendar
+                onDayPress={day => {
+                    console.log('selected day', day);
+                }}
+                onDayLongPress={day => {
+                    console.log('selected day', day);
+                }}
+                monthFormat={'yyyy MM'}
+                onMonthChange={month => {
+                    console.log('month changed', month);
+                }}
+                renderHeader={renderHeader}
+                renderArrow={renderArrow}
+                hideArrows={true}
+                hideExtraDays={false}
+                disableMonthChange={true}
+                firstDay={0}
+                hideDayNames={false}
+                showWeekNumbers={false}
+                onPressArrowLeft={subtractMonth => subtractMonth()}
+                onPressArrowRight={addMonth => addMonth()}
+                disableArrowLeft={true}
+                disableArrowRight={true}
+                disableAllTouchEventsForDisabledDays={true}
+                enableSwipeMonths={true}
+            />
         </StyledView>
-    );
-};
+    )
+}
