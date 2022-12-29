@@ -100,6 +100,8 @@ const TextBox = (props) => {
 }
 
 const NoteEditorScreen = (props) => {
+    const dispatch = useDispatch();
+
     const {
         currentItem,
         navigation: {
@@ -107,8 +109,6 @@ const NoteEditorScreen = (props) => {
             goBack
         }
     } = props;
-
-    const dispatch = useDispatch();
 
     const [warning, setWarning] = useState("");
 

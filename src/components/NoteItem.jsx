@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import PropTypes from "prop-types";
 
 import {setNoteModified} from "../redux/actions/NoteAction";
@@ -20,6 +20,12 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const NoteItem = (props) => {
     const {
+        isNoteModified,
+        isPinNoteModified
+    } = useSelector(state => state.note);
+    const dispatch = useDispatch();
+
+    const {
         id: itemId,
         navigation,
     } = props;
@@ -38,8 +44,6 @@ const NoteItem = (props) => {
 
     const [isResolved, setResolved] = useState(cIsResolved);
 
-    const dispatch = useDispatch();
-
     const collectInputItem = () => ({
         title,
         description,
@@ -51,6 +55,10 @@ const NoteItem = (props) => {
         createdTime,
         updatedTime,
     });
+
+    useEffect(() => {
+        setResolved(cIsResolved);
+    }, [isNoteModified, isPinNoteModified]);
 
     useEffect(() => {
         const item = collectInputItem();

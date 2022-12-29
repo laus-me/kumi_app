@@ -19,6 +19,8 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledButton = styled(Button);
 
 const NoteViewerScreen = (props) => {
+    const dispatch = useDispatch();
+
     const {
         currentItem,
         navigation: {
@@ -26,8 +28,6 @@ const NoteViewerScreen = (props) => {
             goBack
         }
     } = props;
-
-    const dispatch = useDispatch();
 
     const {
         id: itemId
