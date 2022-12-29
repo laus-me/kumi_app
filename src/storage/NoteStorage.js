@@ -7,14 +7,16 @@ const {read, write} = newDataHandlers("note_storage");
 const snowflake = new SnowflakeId();
 const noteKey = "notes";
 
-export const getAllNotes = () => {
-    const data = read(noteKey);
-    return data || {};
+export const getAllNotes = async () => {
+    const dataPrototype = await read(noteKey);
+    return Object
+        .entries(dataPrototype || {})
+        .map((i) => ({id: i[0], ...i[1]}));
 };
 
-export const setNote = async (item) => {
+export const setNote = async (item, itemId = null) => {
     const prevState = await read(noteKey);
-    const itemId = item.id || snowflake.generate();
+    itemId = itemId || snowflake.generate();
     const state = {...prevState, [itemId]: item};
     await write(noteKey, state);
 };

@@ -21,11 +21,10 @@ const InputBox = (props) => {
         <StyledView>
             <StyledText className="font-semibold text-gray-600 py-2">{name}</StyledText>
             <StyledTextInput
-                type="text"
                 placeholder={placeholder}
                 className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 mt-2 px-4"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
+                defaultValue={value}
+                onChangeText={setValue}
             />
         </StyledView>
     );
@@ -38,11 +37,10 @@ const DateSelector = (props) => {
             <StyledText className="font-semibold text-gray-600 py-2">{name}</StyledText>
             <StyledView className="relative focus-within:text-gray-600 text-gray-400">
                 <StyledTextInput
-                    type="text"
                     placeholder="2002/03/12 13:00"
                     className="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
+                    defaultValue={value}
+                    onChangeText={setValue}
                 />
                 <StyledView className="absolute left-3 top-2">
                     <CalendarIcon className="w-6 h-6"/>
@@ -80,12 +78,11 @@ const TextBox = (props) => {
             <StyledText className="font-semibold text-gray-600 py-2">{name}</StyledText>
             <StyledTextInput
                 multiline
-                name="message"
                 className="w-full min-h-[100px] max-h-[300px] h-28 appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg mt-2 py-2 px-4"
                 placeholder={placeholder}
                 spellCheck="false"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
+                defaultValue={value}
+                onChangeText={setValue}
             ></StyledTextInput>
             <StyledText className="text-xs text-gray-400 md:text-left my-3">
                 你已經輸入了 {value?.length || "?"} 個字了
