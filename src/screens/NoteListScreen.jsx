@@ -5,7 +5,6 @@ import classnames from "classnames";
 
 import {
     setNoteModified,
-    setPinNoteModified
 } from '../redux/actions/NoteAction';
 
 import {
@@ -35,10 +34,7 @@ export const optionNoteListScreen = {
 };
 
 export const NoteListScreen = ({navigation}) => {
-    const {
-        isNoteModified,
-        isPinNoteModified
-    } = useSelector(state => state.note);
+    const {isNoteModified} = useSelector(state => state.note);
     const dispatch = useDispatch();
 
     const [allNotes, setAllNotes] = useState([]);
@@ -53,18 +49,17 @@ export const NoteListScreen = ({navigation}) => {
             .catch((e) => {
                 console.error(e);
             });
-    }, [isNoteModified, isPinNoteModified]);
+    }, [isNoteModified]);
 
     useEffect(() => {
         getAllPinNotes()
             .then((i) => {
                 setAllPinNotes(i);
-                dispatch(setPinNoteModified(false));
             })
             .catch((e) => {
                 console.error(e);
             });
-    }, [isNoteModified, isPinNoteModified]);
+    }, [isNoteModified]);
 
     const classNameHomeItemList = classnames({
         "min-h-0": true,

@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from 'react-redux';
+import * as React from "react";
+import {useDispatch} from 'react-redux';
 import PropTypes from "prop-types";
 
 import {setNoteModified} from "../redux/actions/NoteAction";
@@ -19,10 +19,6 @@ const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const NoteItem = (props) => {
-    const {
-        isNoteModified,
-        isPinNoteModified
-    } = useSelector(state => state.note);
     const dispatch = useDispatch();
 
     const {
@@ -33,7 +29,7 @@ const NoteItem = (props) => {
     const {
         title,
         description,
-        isResolved: cIsResolved,
+        isResolved,
         isPinEnabled,
         isNotificationEnabled,
         notificationStart,
@@ -41,8 +37,6 @@ const NoteItem = (props) => {
         createdTime,
         updatedTime,
     } = props;
-
-    const [isResolved, setResolved] = useState(cIsResolved);
 
     const collectInputItem = () => ({
         title,
@@ -56,13 +50,9 @@ const NoteItem = (props) => {
         updatedTime,
     });
 
-    useEffect(() => {
-        setResolved(cIsResolved);
-    }, [isNoteModified, isPinNoteModified]);
-
-    useEffect(() => {
+    const handlePressCircle = () => {
         const item = collectInputItem();
-
+        item.isResolved = !item.isResolved;
         setNote(item, itemId)
             .then(() => {
                 dispatch(setNoteModified(true));
@@ -70,10 +60,6 @@ const NoteItem = (props) => {
             .catch((e) => {
                 console.error(e);
             });
-    }, [isResolved]);
-
-    const handlePressCircle = () => {
-        setResolved((prevState) => !prevState);
     };
 
     const handlePressBar = () => {

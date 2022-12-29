@@ -1,6 +1,5 @@
 const initialState = {
     isNoteModified: false,
-    isPinNoteModified: false,
 };
 
 export default (state = initialState, action) => {
@@ -9,11 +8,6 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isNoteModified: action.payload.isNoteModified,
-            };
-        case "SET_PIN_NOTE_MODIFIED":
-            return {
-                ...state,
-                isPinNoteModified: action.payload.isPinNoteModified,
             };
         default:
             return state;
