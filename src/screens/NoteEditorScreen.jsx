@@ -162,22 +162,31 @@ const NoteEditorScreen = (props) => {
         }
 
         if (item.isNotificationEnabled) {
-            const start = dayjs(item.notificationStart, "YYYY/MM/DD HH:mm", true);
-            if (!start.isValid()) {
-                popWarningAlert("開始提醒時間無效");
+            const currentTime = dayjs();
+            const startTime = dayjs(item.notificationStart, "YYYY/MM/DD HH:mm", true);
+            if (!startTime.isValid()) {
+                popWarningAlert("開始提醒時間是錯的！");
                 return;
             }
-            const end = dayjs(item.notificationEnd, "YYYY/MM/DD HH:mm", true);
-            if (!end.isValid()) {
-                popWarningAlert("結束提醒時間無效");
+            if (startTime.isBefore(currentTime)) {
+                popWarningAlert("開始提醒時間竟然比現在還要早");
                 return;
             }
-            if (end.isBefore(start)) {
-                popWarningAlert("結束提醒時間早於開始提醒時間");
+            const endTime = dayjs(item.notificationEnd, "YYYY/MM/DD HH:mm", true);
+            if (!endTime.isValid()) {
+                popWarningAlert("結束提醒時間是錯的！");
                 return;
             }
-            item.notificationStart = start.format("YYYY/MM/DD HH:mm");
-            item.notificationEnd = end.format("YYYY/MM/DD HH:mm");
+            if (endTime.isBefore(currentTime)) {
+                popWarningAlert("結束提醒時間竟然比現在還要早");
+                return;
+            }
+            if (endTime.isBefore(startTime)) {
+                popWarningAlert("結束提醒時間沒辦法比開始提醒時間還要早啦");
+                return;
+            }
+            item.notificationStart = endTime.format("YYYY/MM/DD HH:mm");
+            item.notificationEnd = endTime.format("YYYY/MM/DD HH:mm");
         } else {
             item.notificationStart = "";
             item.notificationEnd = "";

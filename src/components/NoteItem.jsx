@@ -2,6 +2,8 @@ import * as React from "react";
 import {useDispatch} from 'react-redux';
 import PropTypes from "prop-types";
 
+import dayjs from "dayjs";
+
 import {setNoteModified} from "../redux/actions/NoteAction";
 
 import {Text, TouchableOpacity, View} from "react-native";
@@ -37,6 +39,10 @@ const NoteItem = (props) => {
         createdTime,
         updatedTime,
     } = props;
+
+    const isExpired = isNotificationEnabled
+        ? dayjs().isAfter(dayjs(notificationEnd))
+        : null;
 
     const collectInputItem = () => ({
         title,
@@ -94,15 +100,17 @@ const NoteItem = (props) => {
                 </StyledView>
                 <StyledView className="grow w-full select-none cursor-pointer">
                     <StyledText className="text-gray-600">
-                        {isNotificationEnabled ? (
+                        {
                             isResolved
                                 ? "歐耶已經完成了"
-                                : `已啟用提醒（${notificationStart}～${notificationEnd}）`
-                        ) : (
-                            isResolved
-                                ? "歐耶已經完成了"
-                                : "要記得完成呦"
-                        )}
+                                : isNotificationEnabled
+                                    ? (
+                                        isExpired
+                                            ? `完蛋了！提醒已經過期（${notificationEnd}）`
+                                            : `提醒啟動！（${notificationStart}～${notificationEnd}）`
+                                    )
+                                    : "要記得完成呦"
+                        }
                     </StyledText>
                 </StyledView>
             </StyledTouchableOpacity>

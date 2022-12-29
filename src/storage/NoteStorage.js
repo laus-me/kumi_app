@@ -42,7 +42,7 @@ export const setNote = async (item, itemId = null, isNotificationUpdated = false
             await createNotification({
                 itemId,
                 title: item.title,
-                body: item.description || "這裡是個提醒提醒！",
+                body: item.description || "這裡是個號稱宇宙無敵非常重要的超級提醒！",
                 date: new Date(item.notificationStart)
             })
         } else {

@@ -48,16 +48,7 @@ export const CalendarScreen = () => {
     return (
         <StyledView>
             <Calendar
-                onDayPress={day => {
-                    console.info('selected day', day);
-                }}
-                onDayLongPress={day => {
-                    console.info('selected day', day);
-                }}
                 monthFormat={'yyyy MM'}
-                onMonthChange={month => {
-                    console.info('month changed', month);
-                }}
                 renderHeader={renderHeader}
                 renderArrow={renderArrow}
                 hideArrows={true}
@@ -66,8 +57,8 @@ export const CalendarScreen = () => {
                 firstDay={0}
                 hideDayNames={false}
                 showWeekNumbers={false}
-                onPressArrowLeft={subtractMonth => subtractMonth()}
-                onPressArrowRight={addMonth => addMonth()}
+                onPressArrowLeft={(subtractMonth) => subtractMonth()}
+                onPressArrowRight={(addMonth) => addMonth()}
                 disableArrowLeft={true}
                 disableArrowRight={true}
                 disableAllTouchEventsForDisabledDays={true}
