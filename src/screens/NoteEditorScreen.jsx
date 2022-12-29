@@ -13,6 +13,7 @@ import {
 import {View, Text, TextInput, Button} from "react-native";
 import {styled} from "nativewind";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { ALERT_TYPE, Dialog, AlertNotificationRoot } from 'react-native-alert-notification';
 
 import {
     CalendarIcon,
@@ -110,8 +111,6 @@ const NoteEditorScreen = (props) => {
         }
     } = props;
 
-    const [warning, setWarning] = useState("");
-
     const {
         id: itemId,
     } = currentItem;
@@ -145,27 +144,36 @@ const NoteEditorScreen = (props) => {
         updatedTime,
     });
 
+    const popWarningAlert = (message) => {
+        Dialog.show({
+            type: ALERT_TYPE.DANGER,
+            title: '錯誤',
+            textBody: message,
+            button: '關閉',
+        })
+    };
+
     const handleSave = () => {
         const item = collectInputItem();
 
         if (!item.title) {
-            setWarning("標題為必填欄位");
+            popWarningAlert("標題為必填欄位");
             return;
         }
 
         if (item.isNotificationEnabled) {
             const start = dayjs(item.notificationStart, "YYYY/MM/DD HH:mm", true);
             if (!start.isValid()) {
-                setWarning("開始提醒時間無效");
+                popWarningAlert("開始提醒時間無效");
                 return;
             }
             const end = dayjs(item.notificationEnd, "YYYY/MM/DD HH:mm", true);
             if (!end.isValid()) {
-                setWarning("結束提醒時間無效");
+                popWarningAlert("結束提醒時間無效");
                 return;
             }
             if (end.isBefore(start)) {
-                setWarning("結束提醒時間早於開始提醒時間");
+                popWarningAlert("結束提醒時間早於開始提醒時間");
                 return;
             }
             item.notificationStart = start.format("YYYY/MM/DD HH:mm");
@@ -199,58 +207,51 @@ const NoteEditorScreen = (props) => {
     };
 
     return (
-        <StyledView>
+        <AlertNotificationRoot>
             <StyledView className="bg-white py-1 px-3 mb-5">
-                {warning && (
-                    <StyledText className="text-red-600 text-sm">
-                        {warning}
-                    </StyledText>
+                <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                    <InputBox
+                        name="標題"
+                        placeholder="您想讓我提醒您些什麼？"
+                        value={title}
+                        setValue={setTitle}
+                    />
+                </StyledView>
+                <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                    <Switcher
+                        name="啟用提醒"
+                        value={isNotificationEnabled}
+                        setValue={setNotificationEnabled}
+                    />
+                </StyledView>
+                {isNotificationEnabled && (
+                    <StyledView>
+                        <DateSelector
+                            name="開始提醒時間"
+                            value={notificationStart}
+                            setValue={setNotificationStart}
+                        />
+                        <DateSelector
+                            name="結束提醒時間"
+                            value={notificationEnd}
+                            setValue={setNotificationEnd}
+                        />
+                    </StyledView>
                 )}
-                <StyledView>
-                    <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                        <InputBox
-                            name="標題"
-                            placeholder="您想讓我提醒您些什麼？"
-                            value={title}
-                            setValue={setTitle}
-                        />
-                    </StyledView>
-                    <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                        <Switcher
-                            name="啟用提醒"
-                            value={isNotificationEnabled}
-                            setValue={setNotificationEnabled}
-                        />
-                    </StyledView>
-                    {isNotificationEnabled && (
-                        <StyledView>
-                            <DateSelector
-                                name="開始提醒時間"
-                                value={notificationStart}
-                                setValue={setNotificationStart}
-                            />
-                            <DateSelector
-                                name="結束提醒時間"
-                                value={notificationEnd}
-                                setValue={setNotificationEnd}
-                            />
-                        </StyledView>
-                    )}
-                    <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                        <TextBox
-                            name="備註"
-                            placeholder="是因為什麼重要的人嗎？"
-                            value={description}
-                            setValue={setDescription}
-                        />
-                    </StyledView>
-                    <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                        <Switcher
-                            name="成為板上釘釘"
-                            value={isPinEnabled}
-                            setValue={setPinEnabled}
-                        />
-                    </StyledView>
+                <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                    <TextBox
+                        name="備註"
+                        placeholder="是因為什麼重要的人嗎？"
+                        value={description}
+                        setValue={setDescription}
+                    />
+                </StyledView>
+                <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                    <Switcher
+                        name="成為板上釘釘"
+                        value={isPinEnabled}
+                        setValue={setPinEnabled}
+                    />
                 </StyledView>
             </StyledView>
             <StyledView className="flex flex-row justify-around bg-white py-3 px-3">
@@ -274,7 +275,7 @@ const NoteEditorScreen = (props) => {
                     onPress={handleSave}
                 />
             </StyledView>
-        </StyledView>
+        </AlertNotificationRoot>
     )
 }
 
