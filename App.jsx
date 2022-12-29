@@ -11,8 +11,9 @@ import {store} from './src/redux/store';
 import {setNotificationAllowed} from './src/redux/actions/AppRootAction';
 
 import {HomeStack, optionHomeStack} from "./src/stacks/HomeStack";
+import {NoteViewStack, optionNoteViewStack} from "./src/stacks/NoteViewStack";
 import {NoteCreateStack, optionNoteCreateStack} from "./src/stacks/NoteCreateStack";
-import {NoteModifyStack, optionNoteModifyStack} from "./src/stacks/NoteModifyScreen";
+import {NoteModifyStack, optionNoteModifyStack} from "./src/stacks/NoteModifyStack";
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,11 @@ const AppRoot = () => {
                     name="HomeStack"
                     options={optionHomeStack}
                     component={HomeStack}
+                />
+                <Stack.Screen
+                    name="NoteViewStack"
+                    options={optionNoteViewStack}
+                    component={NoteViewStack}
                 />
                 <Stack.Screen
                     name="NoteCreateStack"

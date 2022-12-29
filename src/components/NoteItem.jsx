@@ -1,13 +1,18 @@
-import * as React from "react";
+import React, {useState, useEffect} from "react";
 import {useDispatch} from 'react-redux';
 import PropTypes from "prop-types";
+
+import {setNoteModified} from "../redux/actions/NoteAction";
 
 import {Text, TouchableOpacity, View} from "react-native";
 import {styled} from "nativewind";
 
-import {CheckCircleIcon, QuestionMarkCircleIcon,} from "react-native-heroicons/outline";
 import {setNote} from "../storage/NoteStorage";
-import {setPinNoteModified} from "../redux/actions/NoteAction";
+
+import {
+    CheckCircleIcon,
+    QuestionMarkCircleIcon,
+} from "react-native-heroicons/outline";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -15,16 +20,23 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const NoteItem = (props) => {
     const {
-        id,
+        id: itemId,
+        navigation,
+    } = props;
+
+    const {
         title,
         description,
-        isResolved,
+        isResolved: cIsResolved,
         isPinEnabled,
         isNotificationEnabled,
         notificationStart,
         notificationEnd,
-        navigation,
+        createdTime,
+        updatedTime,
     } = props;
+
+    const [isResolved, setResolved] = useState(cIsResolved);
 
     const dispatch = useDispatch();
 
@@ -36,24 +48,30 @@ const NoteItem = (props) => {
         isNotificationEnabled,
         notificationStart,
         notificationEnd,
+        createdTime,
+        updatedTime,
     });
 
-    const handlePressCircle = () => {
+    useEffect(() => {
         const item = collectInputItem();
-        item.isResolved = !isResolved;
-        setNote(item, id)
+
+        setNote(item, itemId)
             .then(() => {
-                dispatch(setPinNoteModified(true));
+                dispatch(setNoteModified(true));
             })
             .catch((e) => console.error(e));
-    }
+    }, [isResolved]);
+
+    const handlePressCircle = () => {
+        setResolved((prevState) => !prevState);
+    };
 
     const handlePressBar = () => {
         const item = collectInputItem();
-        navigation.navigate("NoteModifyStack", {
-            currentItem: {id, ...item}
+        navigation.navigate("NoteViewStack", {
+            currentItem: {id: itemId, ...item}
         });
-    }
+    };
 
     return (
         <StyledView
@@ -81,13 +99,13 @@ const NoteItem = (props) => {
                 <StyledView className="grow w-64 select-none cursor-pointer">
                     <StyledText className="text-gray-600">
                         {isNotificationEnabled ? (
-                            !isResolved ?
-                                `已啟用提醒（${notificationStart}～${notificationEnd}）` :
-                                "歐耶已經完成了"
+                            isResolved
+                                ? "歐耶已經完成了"
+                                : `已啟用提醒（${notificationStart}～${notificationEnd}）`
                         ) : (
-                            !isResolved ?
-                                "要記得完成呦" :
-                                "歐耶已經完成了"
+                            isResolved
+                                ? "歐耶已經完成了"
+                                : "要記得完成呦"
                         )}
                     </StyledText>
                 </StyledView>

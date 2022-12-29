@@ -103,6 +103,7 @@ const NoteEditorScreen = (props) => {
     const {
         currentItem,
         navigation: {
+            navigate,
             goBack
         }
     } = props;
@@ -112,12 +113,18 @@ const NoteEditorScreen = (props) => {
     const [warning, setWarning] = useState("");
 
     const {
+        id: itemId,
+    } = currentItem;
+
+    const {
         title: cTitle,
-        isNotificationEnabled: cIsNotificationEnabled,
+        description: cDescription,
         isPinEnabled: cIsPinEnabled,
+        isNotificationEnabled: cIsNotificationEnabled,
         notificationStart: cNotificationStart,
         notificationEnd: cNotificationEnd,
-        description: cDescription,
+        createdTime,
+        updatedTime,
     } = currentItem;
 
     const [title, setTitle] = useState(cTitle || "");
@@ -134,6 +141,8 @@ const NoteEditorScreen = (props) => {
         isNotificationEnabled,
         notificationStart,
         notificationEnd,
+        createdTime,
+        updatedTime,
     });
 
     const handleSave = () => {
@@ -163,11 +172,10 @@ const NoteEditorScreen = (props) => {
             item.notificationEnd = end.format("YYYY/MM/DD HH:mm");
         }
 
-        const {id: itemId} = currentItem;
         setNote(item, itemId)
             .then(() => {
                 dispatch(setNoteModified(true));
-                goBack();
+                navigate("HomeStack");
             })
             .catch((e) => console.error(e));
     };
@@ -177,7 +185,7 @@ const NoteEditorScreen = (props) => {
         removeNote(itemId)
             .then(() => {
                 dispatch(setNoteModified(true));
-                goBack();
+                navigate("HomeStack");
             })
             .catch((e) => console.error(e));
     };

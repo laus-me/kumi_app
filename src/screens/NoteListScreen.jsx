@@ -48,6 +48,7 @@ export const NoteListScreen = ({navigation}) => {
         getAllNotes()
             .then((i) => {
                 setAllNotes(i);
+                console.log(i)
                 dispatch(setNoteModified(false));
             })
             .catch((e) => console.error(e));
