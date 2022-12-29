@@ -1,21 +1,24 @@
 import {
     AndroidNotificationPriority,
-    scheduleNotificationAsync
+    scheduleNotificationAsync,
+    cancelScheduledNotificationAsync,
 } from 'expo-notifications';
 
-export const create = () => {
-    const schedulingOptions = {
-        content: {
-            title: 'This is a notification',
-            body: 'This is the body',
-            sound: true,
-            priority: AndroidNotificationPriority.HIGH,
-            color: 'blue',
-        },
-        trigger: {
-            seconds: 10,
-        },
+export const create = ({itemId, title, body, date}) => {
+    const identifier = `note_${itemId}`;
+    const content = {
+        title,
+        body,
+        sound: true,
+        color: 'white',
+        priority: AndroidNotificationPriority.HIGH,
     };
+    const trigger = {date};
     console.info("Notification scheduled");
-    return scheduleNotificationAsync(schedulingOptions);
+    return scheduleNotificationAsync({identifier, content, trigger});
+};
+
+export const cancel = (itemId) => {
+    const identifier = `note_${itemId}`;
+    return cancelScheduledNotificationAsync(identifier);
 };

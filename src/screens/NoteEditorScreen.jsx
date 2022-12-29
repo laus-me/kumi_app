@@ -13,7 +13,7 @@ import {
 import {View, Text, TextInput, Button} from "react-native";
 import {styled} from "nativewind";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { ALERT_TYPE, Dialog, AlertNotificationRoot } from 'react-native-alert-notification';
+import {ALERT_TYPE, Dialog, AlertNotificationRoot} from 'react-native-alert-notification';
 
 import {
     CalendarIcon,
@@ -178,9 +178,13 @@ const NoteEditorScreen = (props) => {
             }
             item.notificationStart = start.format("YYYY/MM/DD HH:mm");
             item.notificationEnd = end.format("YYYY/MM/DD HH:mm");
+        } else {
+            item.notificationStart = "";
+            item.notificationEnd = "";
         }
 
-        setNote(item, itemId)
+        const isNotificationUpdated = cIsNotificationEnabled !== item.isNotificationEnabled;
+        setNote(item, itemId, isNotificationUpdated)
             .then(() => {
                 dispatch(setNoteModified(true));
                 navigate("HomeStack");

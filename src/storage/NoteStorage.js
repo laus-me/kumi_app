@@ -3,6 +3,11 @@ import dayjs from "dayjs";
 
 import {newDataHandlers} from "./index";
 
+import {
+    create as createNotification,
+    cancel as cancelNotification,
+} from "../notifications/NoteNotification";
+
 const {read, write} = newDataHandlers("note_storage");
 
 const snowflake = new SnowflakeId();
@@ -23,7 +28,7 @@ export const getAllPinNotes = async () => {
         .map((i) => ({id: i[0], ...i[1]}));
 };
 
-export const setNote = async (item, itemId = null) => {
+export const setNote = async (item, itemId = null, isNotificationUpdated = false) => {
     const prevState = await read(noteKey);
 
     item.isResolved = item.isResolved || false;
@@ -32,6 +37,19 @@ export const setNote = async (item, itemId = null) => {
     item.updatedTime = currentTimeString;
     item.createdTime = item.createdTime || currentTimeString;
 
+    if (isNotificationUpdated) {
+        if (item.isNotificationEnabled) {
+            await createNotification({
+                itemId,
+                title: item.title,
+                body: item.description || "這裡是個提醒提醒！",
+                date: new Date(item.notificationStart)
+            })
+        } else {
+            await cancelNotification(itemId);
+        }
+    }
+
     itemId = itemId || snowflake.generate();
     const state = {...prevState, [itemId]: item};
     await write(noteKey, state);
@@ -39,6 +57,7 @@ export const setNote = async (item, itemId = null) => {
 
 export const removeNote = async (itemId) => {
     const prevState = await read(noteKey);
+    await cancelNotification(itemId);
     delete prevState[itemId];
     await write(noteKey, prevState);
 };

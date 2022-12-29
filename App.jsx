@@ -5,7 +5,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from "@react-navigation/stack";
 
 import {request} from "./src/notifications";
-import {create} from "./src/notifications/NoteNotification";
 
 import {store} from './src/redux/store';
 import {setNotificationAllowed} from './src/redux/actions/AppRootAction';
@@ -29,10 +28,6 @@ const AppRoot = () => {
                 console.error(e);
             });
     }, []);
-
-    setTimeout(() => {
-        create()
-    }, 3000);
 
     return (
         <NavigationContainer>

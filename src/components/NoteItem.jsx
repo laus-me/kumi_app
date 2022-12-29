@@ -92,7 +92,7 @@ const NoteItem = (props) => {
                         {title}
                     </StyledText>
                 </StyledView>
-                <StyledView className="grow w-64 select-none cursor-pointer">
+                <StyledView className="grow w-full select-none cursor-pointer">
                     <StyledText className="text-gray-600">
                         {isNotificationEnabled ? (
                             isResolved
