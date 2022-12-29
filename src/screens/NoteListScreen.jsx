@@ -51,7 +51,7 @@ export const NoteListScreen = ({navigation}) => {
                 dispatch(setNoteModified(false));
             })
             .catch((e) => console.error(e));
-    }, [isNoteModified]);
+    }, [isNoteModified, isPinNoteModified]);
 
     useEffect(() => {
         getAllPinNotes()
@@ -60,7 +60,7 @@ export const NoteListScreen = ({navigation}) => {
                 dispatch(setPinNoteModified(false));
             })
             .catch((e) => console.error(e));
-    }, [isPinNoteModified]);
+    }, [isNoteModified, isPinNoteModified]);
 
     const classNameHomeItemList = classnames({
         "min-h-0": true,

@@ -19,7 +19,7 @@ export const getAllPinNotes = async () => {
     const dataPrototype = await read(noteKey);
     return Object
         .entries(dataPrototype || {})
-        .filter((i) => i.isPinEnabled)
+        .filter((i) => i[1].isPinEnabled)
         .map((i) => ({id: i[0], ...i[1]}));
 };
 

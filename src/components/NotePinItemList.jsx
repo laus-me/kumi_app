@@ -16,7 +16,10 @@ const NotePinItemList = (props) => {
     } = props;
 
     const renderItem = ({item}) => (
-        <NoteItem title={item.title} navigation={navigation} />
+        <NoteItem
+            navigation={navigation}
+            {...item}
+        />
     );
 
     return (<>

@@ -7,7 +7,7 @@ import {styled} from "nativewind";
 
 import {CheckCircleIcon, QuestionMarkCircleIcon,} from "react-native-heroicons/outline";
 import {setNote} from "../storage/NoteStorage";
-import {setNoteModified} from "../redux/actions/NoteAction";
+import {setPinNoteModified} from "../redux/actions/NoteAction";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -43,14 +43,15 @@ const NoteItem = (props) => {
         item.isResolved = !isResolved;
         setNote(item, id)
             .then(() => {
-                dispatch(setNoteModified(true));
+                dispatch(setPinNoteModified(true));
             })
             .catch((e) => console.error(e));
     }
 
     const handlePressBar = () => {
+        const item = collectInputItem();
         navigation.navigate("NoteModifyStack", {
-            currentItem: collectInputItem()
+            currentItem: {id, ...item}
         });
     }
 
