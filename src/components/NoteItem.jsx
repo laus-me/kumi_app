@@ -59,7 +59,9 @@ const NoteItem = (props) => {
             .then(() => {
                 dispatch(setNoteModified(true));
             })
-            .catch((e) => console.error(e));
+            .catch((e) => {
+                console.error(e);
+            });
     }, [isResolved]);
 
     const handlePressCircle = () => {

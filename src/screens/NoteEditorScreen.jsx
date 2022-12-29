@@ -177,7 +177,9 @@ const NoteEditorScreen = (props) => {
                 dispatch(setNoteModified(true));
                 navigate("HomeStack");
             })
-            .catch((e) => console.error(e));
+            .catch((e) => {
+                console.error(e);
+            });
     };
 
     const handleDelete = () => {
@@ -187,7 +189,9 @@ const NoteEditorScreen = (props) => {
                 dispatch(setNoteModified(true));
                 navigate("HomeStack");
             })
-            .catch((e) => console.error(e));
+            .catch((e) => {
+                console.error(e);
+            });
     };
 
     const handleCancel = () => {

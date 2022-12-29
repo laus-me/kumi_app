@@ -66,14 +66,13 @@ const NoteViewerScreen = (props) => {
             .then(() => {
                 dispatch(setNoteModified(true));
             })
-            .catch((e) => console.error(e));
+            .catch((e) => {
+                console.error(e);
+            });
     }, [isResolved]);
 
     const handlePressCircle = () => {
-        setResolved((prevState) => {
-            console.log(!prevState);
-            return !prevState
-        });
+        setResolved((prevState) => !prevState);
     };
 
     const handleEdit = () => {

@@ -48,10 +48,11 @@ export const NoteListScreen = ({navigation}) => {
         getAllNotes()
             .then((i) => {
                 setAllNotes(i);
-                console.log(i)
                 dispatch(setNoteModified(false));
             })
-            .catch((e) => console.error(e));
+            .catch((e) => {
+                console.error(e);
+            });
     }, [isNoteModified, isPinNoteModified]);
 
     useEffect(() => {
@@ -60,7 +61,9 @@ export const NoteListScreen = ({navigation}) => {
                 setAllPinNotes(i);
                 dispatch(setPinNoteModified(false));
             })
-            .catch((e) => console.error(e));
+            .catch((e) => {
+                console.error(e);
+            });
     }, [isNoteModified, isPinNoteModified]);
 
     const classNameHomeItemList = classnames({
