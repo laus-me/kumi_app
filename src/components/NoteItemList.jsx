@@ -1,24 +1,24 @@
-import React, {useState} from "react";
+import * as React from "react";
 
 import {FlatList} from "react-native";
 import {styled} from "nativewind";
-
-import {getAllNotes} from "../storage/NoteStorage";
 
 import NoteCreateItem from "./NoteCreateItem";
 import NoteItem from "./NoteItem";
 
 const StyledFlatList = styled(FlatList);
 
-const NoteItemList = ({navigation}) => {
-    const [allNotes, setAllNotes] = useState([]);
-
-    getAllNotes()
-        .then((i) => setAllNotes(i))
-        .catch((e) => console.error(e));
+const NoteItemList = (props) => {
+    const {
+        navigation,
+        allNotes,
+    } = props;
 
     const renderItem = ({item}) => (
-        <NoteItem title={item.title} navigation={navigation} />
+        <NoteItem
+            navigation={navigation}
+            {...item}
+        />
     );
 
     return (<>

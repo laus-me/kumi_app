@@ -1,10 +1,18 @@
 import React, {useState} from "react"
+import {useDispatch} from 'react-redux';
+
+import dayjs from "dayjs";
+
+import {setNoteModified} from '../redux/actions/NoteAction';
+
+import {
+    setNote,
+    removeNote
+} from "../storage/NoteStorage";
 
 import {View, Text, TextInput, Button} from "react-native";
 import {styled} from "nativewind";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-
-import {setNote, removeNote} from "../storage/NoteStorage";
 
 import {
     CalendarIcon,
@@ -99,6 +107,8 @@ const NoteEditorScreen = (props) => {
         }
     } = props;
 
+    const dispatch = useDispatch();
+
     const [warning, setWarning] = useState("");
 
     const {
@@ -117,26 +127,59 @@ const NoteEditorScreen = (props) => {
     const [notificationEnd, setNotificationEnd] = useState(cNotificationEnd || "");
     const [description, setDescription] = useState(cDescription || "");
 
+    const collectInputItem = () => ({
+        title,
+        isPinEnabled,
+        isNotificationEnabled,
+        notificationStart,
+        notificationEnd,
+        description,
+    });
+
     const handleSave = () => {
-        const item = {
-            title,
-            isPinEnabled,
-            isNotificationEnabled,
-            notificationStart,
-            notificationEnd,
-            description,
-        };
-        if (Object.prototype.hasOwnProperty.call(currentItem, "id")) {
-            const {id: itemId} = currentItem;
-            item["id"] = itemId;
+        const item = collectInputItem();
+
+        if (!item.title) {
+            setWarning("標題為必填欄位");
+            return;
         }
-        setNote(item)
-            .then(() => goBack());
+
+        if (item.isNotificationEnabled) {
+            const start = dayjs(item.notificationStart, "YYYY/MM/DD HH:mm", true);
+            if (!start.isValid()) {
+                setWarning("開始提醒時間無效");
+                return;
+            }
+            const end = dayjs(item.notificationEnd, "YYYY/MM/DD HH:mm", true);
+            if (!end.isValid()) {
+                setWarning("結束提醒時間無效");
+                return;
+            }
+            if (end.isBefore(start)) {
+                setWarning("結束提醒時間早於開始提醒時間");
+                return;
+            }
+            item.notificationStart = start.format("YYYY/MM/DD HH:mm");
+            item.notificationEnd = end.format("YYYY/MM/DD HH:mm");
+        }
+
+        const {id: itemId} = currentItem;
+        setNote(item, itemId)
+            .then(() => {
+                dispatch(setNoteModified(true));
+                goBack();
+            })
+            .catch((e) => console.error(e));
     };
 
     const handleDelete = () => {
         const {id: itemId} = currentItem;
-        removeNote(itemId).then(() => goBack());
+        removeNote(itemId)
+            .then(() => {
+                dispatch(setNoteModified(true));
+                goBack();
+            })
+            .catch((e) => console.error(e));
     };
 
     const handleCancel = () => {
@@ -200,9 +243,9 @@ const NoteEditorScreen = (props) => {
             </StyledView>
             <StyledView className="flex flex-row justify-around bg-white py-3 px-3">
                 <StyledButton
-                    title="儲存"
-                    color="black"
-                    onPress={handleSave}
+                    title="取消"
+                    color="gray"
+                    onPress={handleCancel}
                 />
                 {
                     currentItem.id && (
@@ -214,9 +257,9 @@ const NoteEditorScreen = (props) => {
                     )
                 }
                 <StyledButton
-                    title="取消"
-                    color="gray"
-                    onPress={handleCancel}
+                    title="儲存"
+                    color="black"
+                    onPress={handleSave}
                 />
             </StyledView>
         </StyledView>

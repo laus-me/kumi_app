@@ -1,13 +1,10 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 
-import {View, Text, TouchableOpacity} from "react-native";
+import {Text, TouchableOpacity, View} from "react-native";
 import {styled} from "nativewind";
 
-import {
-    CheckCircleIcon,
-    QuestionMarkCircleIcon,
-} from "react-native-heroicons/outline";
+import {CheckCircleIcon, QuestionMarkCircleIcon,} from "react-native-heroicons/outline";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -33,11 +30,16 @@ const NoteItem = (props) => {
     }
 
     const handlePressBar = () => {
-        navigation.navigate(
-            id === 0
-                ? "NoteCreateScreen"
-                : "NoteModifyScreen"
-        )
+        navigation.navigate("NoteModifyStack", {
+            currentItem: {
+                id,
+                title,
+                isResolved,
+                isNotificationEnabled,
+                notificationStart,
+                notificationEnd,
+            }
+        });
     }
 
     return (
@@ -50,8 +52,8 @@ const NoteItem = (props) => {
             >
                 {
                     isResolved ?
-                        (<CheckCircleIcon color="#000" title="已完成" size={35} />) :
-                        (<QuestionMarkCircleIcon color="#000" title="未完成" size={35} />)
+                        (<CheckCircleIcon color="#000" title="已完成" size={35}/>) :
+                        (<QuestionMarkCircleIcon color="#000" title="未完成" size={35}/>)
                 }
             </StyledTouchableOpacity>
             <StyledTouchableOpacity
@@ -85,8 +87,8 @@ NoteItem.propTypes = {
     title: PropTypes.string,
     isResolved: PropTypes.bool,
     isNotificationEnabled: PropTypes.bool,
-    notificationStart: PropTypes.number,
-    notificationEnd: PropTypes.number,
+    notificationStart: PropTypes.string,
+    notificationEnd: PropTypes.string,
 };
 
 export default NoteItem;

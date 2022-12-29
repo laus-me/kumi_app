@@ -1,9 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
 
-import {appRoot} from "./reducers/AppRootReducer";
+import appRootReducer from "./reducers/AppRootReducer";
+import noteReducer from "./reducers/NoteReducer";
 
 export const store = configureStore({
     reducer: {
-        appRoot,
+        appRoot: appRootReducer,
+        note: noteReducer,
     }
 });

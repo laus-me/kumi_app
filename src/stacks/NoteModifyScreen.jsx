@@ -6,8 +6,20 @@ export const optionNoteModifyStack = {
     title: "修改待辦事項"
 };
 
-export const NoteModifyStack = () => {
+export const NoteModifyStack = (props) => {
+    const {
+        route,
+        navigation,
+    } = props;
+
+    const {currentItem} = route.params;
+
+    console.log(currentItem);
+
     return (
-        <NoteEditorScreen />
+        <NoteEditorScreen
+            currentItem={currentItem}
+            navigation={navigation}
+        />
     )
 }

@@ -9,18 +9,12 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledFlatList = styled(FlatList);
 
-const data = [
-    {
-        id: 0,
-        title: "Hi",
-        isResolved: true,
-        isNotificationEnabled: false,
-        notificationStart: 1000000,
-        notificationEnd: 10000000,
-    },
-];
+const NotePinItemList = (props) => {
+    const {
+        navigation,
+        allPinNotes,
+    } = props;
 
-const NotePinItemList = ({navigation}) => {
     const renderItem = ({item}) => (
         <NoteItem title={item.title} navigation={navigation} />
     );
@@ -30,7 +24,7 @@ const NotePinItemList = ({navigation}) => {
             <StyledText>版上釘釘</StyledText>
         </StyledView>
         <StyledFlatList
-            data={data}
+            data={allPinNotes}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
         />

@@ -6,8 +6,17 @@ export const optionNoteCreateStack = {
     title: "建立待辦事項"
 };
 
-export const NoteCreateStack = ({navigation}) => {
+export const NoteCreateStack = (props) => {
+    const currentItem = {};
+
+    const {
+        navigation,
+    } = props;
+
     return (
-        <NoteEditorScreen currentItem={({})} navigation={navigation} />
+        <NoteEditorScreen
+            currentItem={currentItem}
+            navigation={navigation}
+        />
     )
 }
