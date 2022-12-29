@@ -1,10 +1,13 @@
 import * as React from "react";
+import {useDispatch} from 'react-redux';
 import PropTypes from "prop-types";
 
 import {Text, TouchableOpacity, View} from "react-native";
 import {styled} from "nativewind";
 
 import {CheckCircleIcon, QuestionMarkCircleIcon,} from "react-native-heroicons/outline";
+import {setNote} from "../storage/NoteStorage";
+import {setNoteModified} from "../redux/actions/NoteAction";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -14,31 +17,40 @@ const NoteItem = (props) => {
     const {
         id,
         title,
+        description,
         isResolved,
+        isPinEnabled,
         isNotificationEnabled,
         notificationStart,
         notificationEnd,
         navigation,
     } = props;
 
+    const dispatch = useDispatch();
+
+    const collectInputItem = () => ({
+        title,
+        description,
+        isResolved,
+        isPinEnabled,
+        isNotificationEnabled,
+        notificationStart,
+        notificationEnd,
+    });
+
     const handlePressCircle = () => {
-        navigation.navigate(
-            id === 0
-                ? "NoteCreateScreen"
-                : "NoteModifyScreen"
-        )
+        const item = collectInputItem();
+        item.isResolved = !isResolved;
+        setNote(item, id)
+            .then(() => {
+                dispatch(setNoteModified(true));
+            })
+            .catch((e) => console.error(e));
     }
 
     const handlePressBar = () => {
         navigation.navigate("NoteModifyStack", {
-            currentItem: {
-                id,
-                title,
-                isResolved,
-                isNotificationEnabled,
-                notificationStart,
-                notificationEnd,
-            }
+            currentItem: collectInputItem()
         });
     }
 
@@ -84,8 +96,11 @@ const NoteItem = (props) => {
 };
 
 NoteItem.propTypes = {
+    id: PropTypes.string,
     title: PropTypes.string,
+    description: PropTypes.string,
     isResolved: PropTypes.bool,
+    isPinEnabled: PropTypes.bool,
     isNotificationEnabled: PropTypes.bool,
     notificationStart: PropTypes.string,
     notificationEnd: PropTypes.string,

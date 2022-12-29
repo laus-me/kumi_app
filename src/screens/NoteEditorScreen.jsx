@@ -129,11 +129,11 @@ const NoteEditorScreen = (props) => {
 
     const collectInputItem = () => ({
         title,
+        description,
         isPinEnabled,
         isNotificationEnabled,
         notificationStart,
         notificationEnd,
-        description,
     });
 
     const handleSave = () => {
