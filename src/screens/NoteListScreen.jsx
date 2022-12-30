@@ -12,18 +12,25 @@ import {
     getAllPinNotes
 } from "../storage/NoteStorage";
 
-import {View} from "react-native";
+import {View, TouchableOpacity} from "react-native";
 import {styled} from "nativewind";
 
 import NotePinItemList from "../components/NotePinItemList";
 import NoteItemList from "../components/NoteItemList";
 
-import {HomeIcon} from "react-native-heroicons/outline";
+import {
+    HomeIcon,
+    BoltIcon,
+} from "react-native-heroicons/outline";
 
 const StyledView = styled(View);
+const StyledTouchableOpacity = styled(TouchableOpacity);
 
-export const optionNoteListScreen = {
+export const createOptionNoteListScreen = ({navigation}) => ({
     title: "清單",
+    headerRight: () => (
+        <NoteListHeaderRightButton navigation={navigation} />
+    ),
     tabBarIcon: ({color, size}) => (
         <HomeIcon
             name="home-icon"
@@ -31,6 +38,20 @@ export const optionNoteListScreen = {
             size={size}
         />
     ),
+});
+
+const NoteListHeaderRightButton = ({navigation}) => {
+    const handlePress = () => {
+        navigation.navigate("SyncStack");
+    };
+
+    return (
+        <StyledView className="mr-3">
+            <StyledTouchableOpacity onPress={handlePress}>
+                <BoltIcon color="#000" />
+            </StyledTouchableOpacity>
+        </StyledView>
+    )
 };
 
 export const NoteListScreen = ({navigation}) => {

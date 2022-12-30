@@ -22,3 +22,21 @@ export const newDataHandlers = (keyPrefix) => ({
     write: newDataWriter(keyPrefix),
     remove: newDataRemover(keyPrefix),
 });
+
+
+export const dump = async () => {
+    const allKeys = await AsyncStorage.getAllKeys();
+    const allDumpKeys = allKeys.filter(
+        (i) => !i.startsWith("_")
+    );
+    const data = await AsyncStorage.multiGet(allDumpKeys);
+    return JSON.stringify(data)
+};
+
+export const restore = async (dataJson) => {
+    const data = JSON.parse(dataJson);
+    await AsyncStorage.clear();
+    return await Promise.all(data.map(
+        ([i, j]) => AsyncStorage.setItem(i, j)
+    ));
+};

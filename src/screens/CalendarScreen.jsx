@@ -46,7 +46,7 @@ export const CalendarScreen = () => {
         : <ArrowRightIcon color="#000" />;
 
     return (
-        <StyledView>
+        <StyledView className="container">
             <Calendar
                 monthFormat={'yyyy MM'}
                 renderHeader={renderHeader}

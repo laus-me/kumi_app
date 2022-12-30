@@ -8,7 +8,7 @@ import {
     cancel as cancelNotification,
 } from "../notifications/NoteNotification";
 
-const {read, write} = newDataHandlers("note_storage");
+const {read, write} = newDataHandlers("note");
 
 const snowflake = new SnowflakeId();
 const noteKey = "notes";

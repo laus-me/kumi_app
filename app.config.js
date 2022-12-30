@@ -1,4 +1,4 @@
-{
+export default {
   "expo": {
     "name": "Kumi",
     "slug": "kumi-app",
@@ -32,6 +32,7 @@
       "favicon": "./src/assets/favicon.png"
     },
     "extra": {
+      "apiBaseURL": process.env.API_BASE_URL || 'https://localhost:3000',
       "eas": {
         "projectId": "6859934b-a82d-4ea6-98d9-adee2fdad74f"
       }

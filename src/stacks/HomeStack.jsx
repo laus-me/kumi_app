@@ -1,7 +1,7 @@
 import * as React from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
-import {NoteListScreen, optionNoteListScreen} from "../screens/NoteListScreen";
+import {NoteListScreen, createOptionNoteListScreen} from "../screens/NoteListScreen";
 import {CalendarScreen, optionCalendarScreen} from "../screens/CalendarScreen";
 
 const BottomTab = createBottomTabNavigator();
@@ -11,7 +11,9 @@ export const optionHomeStack = {
     headerShown: false,
 };
 
-export const HomeStack = () => {
+export const HomeStack = ({navigation}) => {
+    const optionNoteListScreen = createOptionNoteListScreen({navigation});
+
     return (
         <BottomTab.Navigator>
             <BottomTab.Screen

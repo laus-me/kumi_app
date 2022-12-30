@@ -1,28 +1,42 @@
 import React, {useEffect} from 'react';
-import {Provider, useDispatch} from 'react-redux';
+import {Provider} from 'react-redux';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from "@react-navigation/stack";
 
-import {request} from "./src/notifications";
+import {
+    request as requestNotification
+} from "./src/notifications";
+
+import {
+    init as initSync
+} from "./src/workers/sync"
 
 import {store} from './src/redux/store';
-import {setNotificationAllowed} from './src/redux/actions/AppRootAction';
 
 import {HomeStack, optionHomeStack} from "./src/stacks/HomeStack";
 import {NoteViewStack, optionNoteViewStack} from "./src/stacks/NoteViewStack";
 import {NoteCreateStack, optionNoteCreateStack} from "./src/stacks/NoteCreateStack";
 import {NoteModifyStack, optionNoteModifyStack} from "./src/stacks/NoteModifyStack";
+import {SyncStack, optionSyncStack} from "./src/stacks/SyncStack";
 
 const Stack = createStackNavigator();
 
 const AppRoot = () => {
-    const dispatch = useDispatch();
+    useEffect(() => {
+        initSync()
+            .then(() => {
+                console.info(`initSync OK`);
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+    }, []);
 
     useEffect(() => {
-        request()
-            .then((i) => {
-                dispatch(setNotificationAllowed(i));
+        requestNotification()
+            .then(() => {
+                console.info(`requestNotification OK`);
             })
             .catch((e) => {
                 console.error(e);
@@ -51,6 +65,11 @@ const AppRoot = () => {
                     name="NoteModifyStack"
                     options={optionNoteModifyStack}
                     component={NoteModifyStack}
+                />
+                <Stack.Screen
+                    name="SyncStack"
+                    options={optionSyncStack}
+                    component={SyncStack}
                 />
             </Stack.Navigator>
         </NavigationContainer>
