@@ -36,7 +36,7 @@ const SyncScreen = () => {
 
     return (
         <StyledView className="container justify-center items-center">
-            <StyledView className="w-full py-10 bg-violet-900 mb-10">
+            <StyledView className="w-full py-10 bg-white mb-10">
                 <StyledView className="mx-10">
                     <StyledButton
                         title="立即同步"
@@ -45,7 +45,7 @@ const SyncScreen = () => {
                     />
                 </StyledView>
                 <StyledView className="mt-5">
-                    <StyledText className="text-center text-slate-200 text-lg">
+                    <StyledText className="text-center text-slate-600 text-lg">
                         上次同步時間： {lastSyncTimeString}
                     </StyledText>
                 </StyledView>
