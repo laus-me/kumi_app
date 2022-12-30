@@ -1,30 +1,30 @@
 import {
-    getRandomBytes
-} from 'expo-random';
+    getRandomBytes,
+} from "expo-random";
 
 import dayjs from "dayjs";
 import CryptoES from "crypto-es";
 
 import {
     dump,
-    restore
+    restore,
 } from "../storage";
 
 import {
     getApiKey,
     getSyncKey,
-    getLastSyncTime, setLastSyncTime, setApiKey, setSyncKey
+    getLastSyncTime, setLastSyncTime, setApiKey, setSyncKey,
 } from "../storage/ClientStorage";
 
 import {
     getClient,
     getSyncData,
-    putSyncData
+    putSyncData,
 } from "../clients/kumi";
 
 const uint8arrayToString = (uint8Arr) => {
     return String.fromCharCode.apply(null, uint8Arr);
-}
+};
 
 export const init = async () => {
     const {data: {secret: newApiKey}} = await getClient();

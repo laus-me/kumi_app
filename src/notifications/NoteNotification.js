@@ -2,7 +2,7 @@ import {
     AndroidNotificationPriority,
     scheduleNotificationAsync,
     cancelScheduledNotificationAsync,
-} from 'expo-notifications';
+} from "expo-notifications";
 
 export const create = ({itemId, title, body, date}) => {
     const identifier = `note_${itemId}`;
@@ -10,7 +10,7 @@ export const create = ({itemId, title, body, date}) => {
         title,
         body,
         sound: true,
-        color: 'white',
+        color: "white",
         priority: AndroidNotificationPriority.HIGH,
     };
     const trigger = {date};

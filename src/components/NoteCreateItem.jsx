@@ -12,7 +12,7 @@ const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const NoteCreateItem = (props) => {
-    const { navigation } = props;
+    const {navigation} = props;
 
     const handlePress = () => {
         navigation.navigate("NoteCreateStack");

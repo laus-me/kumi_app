@@ -5,5 +5,5 @@ import noteReducer from "./reducers/NoteReducer";
 export const store = configureStore({
     reducer: {
         note: noteReducer,
-    }
+    },
 });

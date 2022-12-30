@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {Text, View} from "react-native";
 import {styled} from "nativewind";
-import {Calendar} from 'react-native-calendars';
+import {Calendar} from "react-native-calendars";
 
 import {
     ArrowLeftIcon,
@@ -28,7 +28,7 @@ const extractDate = (date) => ({
     year: date.getFullYear(),
     month: date.getMonth() + 1,
     day: date.getDay(),
-})
+});
 
 export const CalendarScreen = () => {
     const renderHeader = (date) => {
@@ -38,17 +38,17 @@ export const CalendarScreen = () => {
             <StyledText className="mt-2 mb-3">
                 {year} 年 {month} 月
             </StyledText>
-        )
+        );
     };
 
-    const renderArrow= (direction) => direction === 'left'
-        ? <ArrowLeftIcon color="#000" />
-        : <ArrowRightIcon color="#000" />;
+    const renderArrow= (direction) => direction === "left" ?
+        <ArrowLeftIcon color="#000" /> :
+        <ArrowRightIcon color="#000" />;
 
     return (
         <StyledView className="container">
             <Calendar
-                monthFormat={'yyyy MM'}
+                monthFormat={"yyyy MM"}
                 renderHeader={renderHeader}
                 renderArrow={renderArrow}
                 hideArrows={true}
@@ -65,5 +65,5 @@ export const CalendarScreen = () => {
                 enableSwipeMonths={true}
             />
         </StyledView>
-    )
-}
+    );
+};

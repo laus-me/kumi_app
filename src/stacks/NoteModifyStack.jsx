@@ -3,7 +3,7 @@ import * as React from "react";
 import NoteEditorScreen from "../screens/NoteEditorScreen";
 
 export const optionNoteModifyStack = {
-    title: "修改待辦事項"
+    title: "修改待辦事項",
 };
 
 export const NoteModifyStack = (props) => {
@@ -19,5 +19,5 @@ export const NoteModifyStack = (props) => {
             currentItem={currentItem}
             navigation={navigation}
         />
-    )
+    );
 };

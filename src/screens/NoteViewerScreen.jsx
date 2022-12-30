@@ -8,7 +8,7 @@ import {styled} from "nativewind";
 
 import {setNote} from "../storage/NoteStorage";
 
-import {CheckCircleIcon, QuestionMarkCircleIcon,} from "react-native-heroicons/outline";
+import {CheckCircleIcon, QuestionMarkCircleIcon} from "react-native-heroicons/outline";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -22,12 +22,12 @@ const NoteViewerScreen = (props) => {
         currentItem,
         navigation: {
             navigate,
-            goBack
-        }
+            goBack,
+        },
     } = props;
 
     const {
-        id: itemId
+        id: itemId,
     } = currentItem;
 
     const {
@@ -74,7 +74,7 @@ const NoteViewerScreen = (props) => {
 
     const handleEdit = () => {
         navigate("NoteModifyStack", {
-            currentItem
+            currentItem,
         });
     };
 
@@ -156,6 +156,6 @@ const NoteViewerScreen = (props) => {
             </StyledView>
         </StyledView>
     );
-}
+};
 
 export default NoteViewerScreen;

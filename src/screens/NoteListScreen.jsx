@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from "react";
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from "react-redux";
 
 import classnames from "classnames";
 
 import {
     setNoteModified,
-} from '../redux/actions/NoteAction';
+} from "../redux/actions/NoteAction";
 
 import {
     getAllNotes,
-    getAllPinNotes
+    getAllPinNotes,
 } from "../storage/NoteStorage";
 
 import {View, TouchableOpacity} from "react-native";
@@ -51,11 +51,11 @@ const NoteListHeaderRightButton = ({navigation}) => {
                 <BoltIcon color="#000" />
             </StyledTouchableOpacity>
         </StyledView>
-    )
+    );
 };
 
 export const NoteListScreen = ({navigation}) => {
-    const {isNoteModified} = useSelector(state => state.note);
+    const {isNoteModified} = useSelector((state) => state.note);
     const dispatch = useDispatch();
 
     const [allNotes, setAllNotes] = useState([]);
@@ -87,7 +87,7 @@ export const NoteListScreen = ({navigation}) => {
         "min-w-0": true,
         "px-3": allPinNotes.length > 0,
         "lg:flex-1": true,
-    })
+    });
 
     return (<>
         {allPinNotes.length > 0 && (

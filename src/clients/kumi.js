@@ -3,7 +3,7 @@ import Constants from "expo-constants";
 import axios from "axios";
 
 import {
-    getApiKey
+    getApiKey,
 } from "../storage/ClientStorage";
 
 const client = axios.create({
@@ -11,7 +11,7 @@ const client = axios.create({
     timeout: 5000,
     headers: {
         "X-Kumi-Token": getApiKey(),
-    }
+    },
 });
 
 export const getClient = () =>

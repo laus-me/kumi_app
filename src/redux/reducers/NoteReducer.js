@@ -4,12 +4,12 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case "SET_NOTE_MODIFIED":
-            return {
-                ...state,
-                isNoteModified: action.payload.isNoteModified,
-            };
-        default:
-            return state;
+    case "SET_NOTE_MODIFIED":
+        return {
+            ...state,
+            isNoteModified: action.payload.isNoteModified,
+        };
+    default:
+        return state;
     }
 };

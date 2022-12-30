@@ -1,19 +1,19 @@
-import React, {useState} from "react"
-import {useDispatch} from 'react-redux';
+import React, {useState} from "react";
+import {useDispatch} from "react-redux";
 
 import dayjs from "dayjs";
 
-import {setNoteModified} from '../redux/actions/NoteAction';
+import {setNoteModified} from "../redux/actions/NoteAction";
 
 import {
     setNote,
-    removeNote
+    removeNote,
 } from "../storage/NoteStorage";
 
 import {View, Text, TextInput, Button} from "react-native";
 import {styled} from "nativewind";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import {ALERT_TYPE, Dialog, AlertNotificationRoot} from 'react-native-alert-notification';
+import {ALERT_TYPE, Dialog, AlertNotificationRoot} from "react-native-alert-notification";
 
 import {
     CalendarIcon,
@@ -37,7 +37,7 @@ const InputBox = (props) => {
             />
         </StyledView>
     );
-}
+};
 
 const DateSelector = (props) => {
     const {name, value, setValue} = props;
@@ -57,7 +57,7 @@ const DateSelector = (props) => {
             </StyledView>
         </StyledView>
     );
-}
+};
 
 const Switcher = (props) => {
     const {
@@ -78,7 +78,7 @@ const Switcher = (props) => {
             textStyle={textStyle}
         />
     );
-}
+};
 
 const TextBox = (props) => {
     const {name, placeholder, value, setValue} = props;
@@ -97,8 +97,8 @@ const TextBox = (props) => {
                 你已經輸入了 {value?.length || "?"} 個字了
             </StyledText>
         </StyledView>
-    )
-}
+    );
+};
 
 const NoteEditorScreen = (props) => {
     const dispatch = useDispatch();
@@ -107,8 +107,8 @@ const NoteEditorScreen = (props) => {
         currentItem,
         navigation: {
             navigate,
-            goBack
-        }
+            goBack,
+        },
     } = props;
 
     const {
@@ -147,10 +147,10 @@ const NoteEditorScreen = (props) => {
     const popWarningAlert = (message) => {
         Dialog.show({
             type: ALERT_TYPE.DANGER,
-            title: '錯誤',
+            title: "錯誤",
             textBody: message,
-            button: '關閉',
-        })
+            button: "關閉",
+        });
     };
 
     const handleSave = () => {
@@ -291,7 +291,7 @@ const NoteEditorScreen = (props) => {
                 </StyledView>
             </StyledView>
         </AlertNotificationRoot>
-    )
-}
+    );
+};
 
 export default NoteEditorScreen;

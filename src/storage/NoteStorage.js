@@ -33,7 +33,7 @@ export const setNote = async (item, itemId = null, isNotificationUpdated = false
 
     item.isResolved = item.isResolved || false;
 
-    const currentTimeString = dayjs().format("YYYY/MM/DD HH:mm:ss")
+    const currentTimeString = dayjs().format("YYYY/MM/DD HH:mm:ss");
     item.updatedTime = currentTimeString;
     item.createdTime = item.createdTime || currentTimeString;
 
@@ -43,8 +43,8 @@ export const setNote = async (item, itemId = null, isNotificationUpdated = false
                 itemId,
                 title: item.title,
                 body: item.description || "這裡是個號稱宇宙無敵非常重要的超級提醒！",
-                date: new Date(item.notificationStart)
-            })
+                date: new Date(item.notificationStart),
+            });
         } else {
             await cancelNotification(itemId);
         }

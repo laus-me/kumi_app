@@ -6,7 +6,7 @@ import {styled} from "nativewind";
 import {
     upload,
     exportSyncKey,
-    getLastSyncTimeString
+    getLastSyncTimeString,
 } from "../workers/sync";
 
 const StyledView = styled(View);

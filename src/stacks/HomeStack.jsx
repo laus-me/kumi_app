@@ -28,4 +28,4 @@ export const HomeStack = ({navigation}) => {
             />
         </BottomTab.Navigator>
     );
-}
+};

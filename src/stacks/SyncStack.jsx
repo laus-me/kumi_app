@@ -3,7 +3,7 @@ import * as React from "react";
 import SyncScreen from "../screens/SyncScreen";
 
 export const optionSyncStack = {
-    title: "同步備份"
+    title: "同步備份",
 };
 
 export const SyncStack = (props) => {
@@ -15,5 +15,5 @@ export const SyncStack = (props) => {
         <SyncScreen
             navigation={navigation}
         />
-    )
-}
+    );
+};
