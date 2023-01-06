@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {reloadAsync} from "expo-updates";
 
 import {Button, Text, View, Share} from "react-native";
 import {styled} from "nativewind";
@@ -52,6 +54,11 @@ const SyncScreen = () => {
 
     };
 
+    const handleResetData = async () => {
+        await AsyncStorage.clear();
+        await reloadAsync();
+    };
+
     return (
         <StyledView className="container justify-center items-center">
             <StyledView className="w-full py-10 bg-white mb-10">
@@ -76,11 +83,18 @@ const SyncScreen = () => {
                         onPress={handlePressExportKeys}
                     />
                 </StyledView>
-                <StyledView>
+                <StyledView className="pb-3">
                     <StyledButton
                         title="匯入先前的同步金鑰"
                         color="gray"
                         onPress={handlePressImportKeys}
+                    />
+                </StyledView>
+                <StyledView>
+                    <StyledButton
+                        title="重置 App 資料"
+                        color="red"
+                        onPress={handleResetData}
                     />
                 </StyledView>
             </StyledView>

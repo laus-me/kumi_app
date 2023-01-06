@@ -13,7 +13,10 @@ import {
 import {
     getApiKey,
     getSyncKey,
-    getLastSyncTime, setLastSyncTime, setApiKey, setSyncKey,
+    getLastSyncTime,
+    setLastSyncTime,
+    setApiKey,
+    setSyncKey,
 } from "../storage/ClientStorage";
 
 import {
@@ -23,14 +26,15 @@ import {
 } from "../clients/kumi";
 
 const uint8arrayToString = (uint8Arr) => {
-    return String.fromCharCode.apply(null, uint8Arr);
+    const asciiCodes = uint8Arr.map((i) => 32 + (i % 90));
+    return String.fromCharCode.apply(null, asciiCodes);
 };
 
 export const init = async () => {
     const {data: {secret: newApiKey}} = await getClient();
     const newSyncKey = uint8arrayToString(getRandomBytes(32));
 
-    console.log(newApiKey);
+    console.log(newApiKey, newSyncKey);
 
     await setApiKey(newApiKey);
     await setSyncKey(newSyncKey);
