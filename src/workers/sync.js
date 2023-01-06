@@ -26,7 +26,7 @@ import {
 } from "../clients/kumi";
 
 const uint8arrayToString = (uint8Arr) => {
-    const asciiCodes = uint8Arr.map((i) => 32 + (i % 90));
+    const asciiCodes = uint8Arr.map((i) => 35 + (i % 90));
     return String.fromCharCode.apply(null, asciiCodes);
 };
 
@@ -66,5 +66,5 @@ export const exportSyncKey = async () => {
     const apiKey = await getApiKey();
     const syncKey = await getSyncKey();
 
-    return [apiKey, syncKey].join(";");
+    return [apiKey, syncKey].join("!");
 };
