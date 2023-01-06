@@ -9,20 +9,38 @@ import {
     getLastSyncTimeString,
 } from "../workers/sync";
 
+import {
+    getApiKey,
+} from "../storage/ClientStorage";
+
 const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledButton = styled(Button);
 
 const SyncScreen = () => {
     const [lastSyncTimeString, setLastSyncTimeString] = useState("載入中...");
+    const [isInitialized, setInitialized] = useState(false);
 
     useEffect(() => {
         getLastSyncTimeString()
             .then((i) => setLastSyncTimeString(i));
     }, []);
 
+    useEffect(() => {
+        (async () => {
+            const apiKey = await getApiKey();
+            setInitialized(!!apiKey);
+        })();
+    }, []);
+
     const handlePressSyncNow = async () => {
-        await upload();
+        try {
+            await upload();
+        } catch (e) {
+            console.error(e);
+        }
+        const i = await getLastSyncTimeString();
+        setLastSyncTimeString(i);
     };
 
     const handlePressExportKeys = async () => {
@@ -42,6 +60,7 @@ const SyncScreen = () => {
                         title="立即同步"
                         color="black"
                         onPress={handlePressSyncNow}
+                        disabled={!isInitialized}
                     />
                 </StyledView>
                 <StyledView className="mt-5">

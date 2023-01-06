@@ -30,6 +30,8 @@ export const init = async () => {
     const {data: {secret: newApiKey}} = await getClient();
     const newSyncKey = uint8arrayToString(getRandomBytes(32));
 
+    console.log(newApiKey);
+
     await setApiKey(newApiKey);
     await setSyncKey(newSyncKey);
 };

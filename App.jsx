@@ -1,18 +1,18 @@
-import React, {useEffect} from 'react';
-import {Provider} from 'react-redux';
+import React, {useEffect} from "react";
+import {Provider} from "react-redux";
 
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 
 import {
-    request as requestNotification
+    request as requestNotification,
 } from "./src/notifications";
 
 import {
-    init as initSync
-} from "./src/workers/sync"
+    init as initSync,
+} from "./src/workers/sync";
 
-import {store} from './src/redux/store';
+import {store} from "./src/redux/store";
 
 import {HomeStack, optionHomeStack} from "./src/stacks/HomeStack";
 import {NoteViewStack, optionNoteViewStack} from "./src/stacks/NoteViewStack";
@@ -26,7 +26,7 @@ const AppRoot = () => {
     useEffect(() => {
         initSync()
             .then(() => {
-                console.info(`initSync OK`);
+                console.info("initSync OK");
             })
             .catch((e) => {
                 console.error(e);
@@ -36,7 +36,7 @@ const AppRoot = () => {
     useEffect(() => {
         requestNotification()
             .then(() => {
-                console.info(`requestNotification OK`);
+                console.info("requestNotification OK");
             })
             .catch((e) => {
                 console.error(e);
@@ -76,10 +76,12 @@ const AppRoot = () => {
     );
 };
 
-export default function App() {
+const App = () => {
     return (
         <Provider store={store}>
             <AppRoot />
         </Provider>
     );
 };
+
+export default App;

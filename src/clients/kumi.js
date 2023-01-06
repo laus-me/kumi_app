@@ -9,10 +9,19 @@ import {
 const client = axios.create({
     baseURL: Constants.expoConfig.extra.apiBaseURL,
     timeout: 5000,
-    headers: {
-        "X-Kumi-Token": getApiKey(),
-    },
 });
+
+client.interceptors.request.use(
+    async (config) => {
+        const apiKey = await getApiKey();
+        config.headers.set("X-Kumi-Token", apiKey);
+        return config;
+    },
+    (error) => {
+        // Do something with request error
+        return Promise.reject(error);
+    },
+);
 
 export const getClient = () =>
     client.get("/auth/client");

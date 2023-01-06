@@ -7,8 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "eslint \"src/**/*.{js,jsx}\"",
-    "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix"
+    "lint": "eslint \"App.{js,jsx}\" \"src/**/*.{js,jsx}\"",
+    "lint:fix": "eslint \"App.{js,jsx}\" \"src/**/*.{js,jsx}\" --fix"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.17.3",
