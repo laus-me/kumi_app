@@ -23,6 +23,8 @@ export const newDataHandlers = (keyPrefix) => ({
     remove: newDataRemover(keyPrefix),
 });
 
+export const clearAll = () => AsyncStorage.clear();
+
 export const clear = async () => {
     const allKeys = await AsyncStorage.getAllKeys();
     const allDumpKeys = allKeys.filter(
@@ -42,7 +44,6 @@ export const dump = async () => {
 
 export const restore = async (dataJson) => {
     const data = JSON.parse(dataJson);
-    // await AsyncStorage.clear();
     return await Promise.all(data.map(
         ([i, j]) => AsyncStorage.setItem(i, j),
     ));

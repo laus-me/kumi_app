@@ -21,7 +21,7 @@ import {
 
 import {
     dump,
-    clear,
+    clearAll,
 } from "../storage";
 
 import {
@@ -88,7 +88,7 @@ export const SyncOverviewScreen = (props) => {
 
     const handleResetData = async () => {
         await popAlertWarning("App 資料將被完全刪除");
-        await clear();
+        await clearAll();
         await reloadAsync();
     };
 

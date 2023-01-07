@@ -25,6 +25,8 @@ import {
 
 import {
     getApiKey,
+    setApiKey,
+    setSyncKey,
 } from "../storage/ClientStorage";
 
 const StyledView = styled(View);
@@ -87,10 +89,32 @@ export const SyncImportScreen = () => {
             popAlertDanger("沒有同步金鑰，我可是不會動的");
             return;
         }
+
         await popAlertWarning("資料將會被清除");
-        await importKeyChain(keyChain);
+
+        const state = await importKeyChain(keyChain);
+        if (!state) {
+            popAlertDanger("這份同步金鑰是假的啦");
+            return;
+        }
+        const [oldApiKey, oldSyncKey] = state;
+
         await clear();
-        const dumpString = await download();
+
+        let dumpString;
+        try {
+            dumpString = await download();
+        } catch (e) {
+            popAlertDanger("這是薛丁格的同步金鑰，大魔術師正在還原一切...");
+            await setApiKey(oldApiKey);
+            await setSyncKey(oldSyncKey);
+            return;
+        }
+        if (!dumpString) {
+            popAlertDanger("伺服器上沒有資料耶");
+            return;
+        }
+
         await restore(dumpString);
         await reloadAsync();
     };
@@ -102,7 +126,7 @@ export const SyncImportScreen = () => {
                     <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
                         <InputBox
                             name="同步金鑰鏈"
-                            placeholder="您想讓我提醒您些什麼？"
+                            placeholder="請告訴我那串很純的神奇魔法同步金鑰"
                             value={keyChain}
                             setValue={setKeyChain}
                         />

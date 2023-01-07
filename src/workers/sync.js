@@ -50,6 +50,7 @@ export const upload = async (dumpString) => {
 export const download = async () => {
     const syncKey = await getSyncKey();
     const {data: {content}} = await getSyncData();
+    console.log(content);
     const chips = CryptoES.AES.decrypt(content, syncKey);
     return chips.toString(CryptoES.enc.Utf8);
 };
@@ -61,12 +62,16 @@ export const getLastSyncTimeString = async () => {
 export const importKeyChain = async (keyChain) => {
     const [apiKey, syncKey] = keyChain.split("!");
 
+    if (!(apiKey && syncKey)) {
+        return null;
+    }
+
     await Promise.all([
         setApiKey(apiKey),
         setSyncKey(syncKey),
     ]);
 
-    upload();
+    return apiKey, syncKey;
 };
 
 export const exportKeyChain = async () => {
