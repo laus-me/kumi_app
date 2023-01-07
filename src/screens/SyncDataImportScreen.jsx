@@ -80,10 +80,8 @@ export const SyncDataImportScreen = () => {
     const [keyChain, setKeyChain] = useState("");
 
     useEffect(() => {
-        (async () => {
-            const apiKey = await getApiKey();
-            setInitialized(!!apiKey);
-        })();
+        getApiKey()
+            .then((key) => setInitialized(!!key));
     }, []);
 
     const handlePressImport = async () => {

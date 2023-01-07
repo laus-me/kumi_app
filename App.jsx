@@ -9,7 +9,7 @@ import {
 } from "./src/notifications";
 
 import {
-    init as initSync,
+    init as initSync, upload,
 } from "./src/workers/sync";
 
 import {store} from "./src/redux/store";
@@ -27,6 +27,7 @@ const AppRoot = () => {
         initSync()
             .then(() => {
                 console.info("initSync OK");
+                setTimeout(upload, 3_000);
             })
             .catch((e) => {
                 console.error(e);
