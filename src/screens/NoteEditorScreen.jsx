@@ -13,7 +13,12 @@ import {
 import {View, Text, TextInput, Button} from "react-native";
 import {styled} from "nativewind";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import {ALERT_TYPE, Dialog, AlertNotificationRoot} from "react-native-alert-notification";
+
+import {
+    ALERT_TYPE,
+    Dialog,
+    AlertNotificationRoot,
+} from "react-native-alert-notification";
 
 import {
     CalendarIcon,
@@ -100,6 +105,15 @@ const TextBox = (props) => {
     );
 };
 
+const popAlertDanger = (message) => {
+    Dialog.show({
+        type: ALERT_TYPE.DANGER,
+        title: "錯誤",
+        textBody: message,
+        button: "關閉",
+    });
+};
+
 const NoteEditorScreen = (props) => {
     const dispatch = useDispatch();
 
@@ -144,20 +158,11 @@ const NoteEditorScreen = (props) => {
         updatedTime,
     });
 
-    const popWarningAlert = (message) => {
-        Dialog.show({
-            type: ALERT_TYPE.DANGER,
-            title: "錯誤",
-            textBody: message,
-            button: "關閉",
-        });
-    };
-
     const handleSave = () => {
         const item = collectInputItem();
 
         if (!item.title) {
-            popWarningAlert("標題為必填欄位");
+            popAlertDanger("標題為必填欄位");
             return;
         }
 
@@ -165,24 +170,24 @@ const NoteEditorScreen = (props) => {
             const currentTime = dayjs();
             const startTime = dayjs(item.notificationStart, "YYYY/MM/DD HH:mm", true);
             if (!startTime.isValid()) {
-                popWarningAlert("開始提醒時間是錯的！");
+                popAlertDanger("開始提醒時間是錯的！");
                 return;
             }
             if (startTime.isBefore(currentTime)) {
-                popWarningAlert("開始提醒時間竟然比現在還要早");
+                popAlertDanger("開始提醒時間竟然比現在還要早");
                 return;
             }
             const endTime = dayjs(item.notificationEnd, "YYYY/MM/DD HH:mm", true);
             if (!endTime.isValid()) {
-                popWarningAlert("結束提醒時間是錯的！");
+                popAlertDanger("結束提醒時間是錯的！");
                 return;
             }
             if (endTime.isBefore(currentTime)) {
-                popWarningAlert("結束提醒時間竟然比現在還要早");
+                popAlertDanger("結束提醒時間竟然比現在還要早");
                 return;
             }
             if (endTime.isBefore(startTime)) {
-                popWarningAlert("結束提醒時間沒辦法比開始提醒時間還要早啦");
+                popAlertDanger("結束提醒時間沒辦法比開始提醒時間還要早啦");
                 return;
             }
             item.notificationStart = endTime.format("YYYY/MM/DD HH:mm");

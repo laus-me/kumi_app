@@ -6,11 +6,6 @@ import dayjs from "dayjs";
 import CryptoES from "crypto-es";
 
 import {
-    dump,
-    restore,
-} from "../storage";
-
-import {
     getApiKey,
     getSyncKey,
     getLastSyncTime,
@@ -42,9 +37,8 @@ export const init = async () => {
     await setSyncKey(newSyncKey);
 };
 
-export const upload = async () => {
+export const upload = async (dumpString) => {
     const syncKey = await getSyncKey();
-    const dumpString = await dump();
     const chips = CryptoES.AES.encrypt(dumpString, syncKey, {
         mode: CryptoES.mode.CBC,
         padding: CryptoES.pad.Pkcs7,
@@ -56,11 +50,8 @@ export const upload = async () => {
 export const download = async () => {
     const syncKey = await getSyncKey();
     const {data: {content}} = await getSyncData();
-    console.log(content);
     const chips = CryptoES.AES.decrypt(content, syncKey);
-    const dumpString = chips.toString(CryptoES.enc.Utf8);
-    console.log(dumpString);
-    await restore(dumpString);
+    return chips.toString(CryptoES.enc.Utf8);
 };
 
 export const getLastSyncTimeString = async () => {

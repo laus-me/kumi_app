@@ -1,18 +1,28 @@
 import React, {useEffect, useState} from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {reloadAsync} from "expo-updates";
+
+import {
+    reloadAsync,
+} from "expo-updates";
 
 import {Button, Text, View, Share} from "react-native";
 import {styled} from "nativewind";
 
 import {
     upload,
-    download,
     exportKeyChain,
     getLastSyncTimeString,
 } from "../workers/sync";
 
-import {AlertNotificationRoot} from "react-native-alert-notification";
+import {
+    ALERT_TYPE,
+    Dialog,
+    AlertNotificationRoot,
+} from "react-native-alert-notification";
+
+import {
+    dump,
+    clear,
+} from "../storage";
 
 import {
     getApiKey,
@@ -22,7 +32,25 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledButton = styled(Button);
 
-const SyncScreen = () => {
+export const optionSyncOverviewScreen = {
+    title: "總覽",
+};
+
+const popAlertWarning = (message) => new Promise((resolve) => {
+    Dialog.show({
+        type: ALERT_TYPE.WARNING,
+        title: "警告",
+        textBody: message,
+        button: "確定",
+        onPressButton: () => resolve(),
+    });
+});
+
+export const SyncOverviewScreen = (props) => {
+    const {
+        navigation,
+    } = props;
+
     const [lastSyncTimeString, setLastSyncTimeString] = useState("載入中...");
     const [isInitialized, setInitialized] = useState(false);
 
@@ -40,7 +68,8 @@ const SyncScreen = () => {
 
     const handlePressSyncNow = async () => {
         try {
-            await upload();
+            const dumpString = await dump();
+            await upload(dumpString);
         } catch (e) {
             console.error(e);
         }
@@ -54,11 +83,12 @@ const SyncScreen = () => {
     };
 
     const handlePressImportKeys = async () => {
-        download();
+        navigation.navigate("SyncImportScreen");
     };
 
     const handleResetData = async () => {
-        await AsyncStorage.clear();
+        await popAlertWarning("App 資料將被完全刪除");
+        await clear();
         await reloadAsync();
     };
 
@@ -108,5 +138,3 @@ const SyncScreen = () => {
         </AlertNotificationRoot>
     );
 };
-
-export default SyncScreen;

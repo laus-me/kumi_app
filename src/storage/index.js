@@ -23,6 +23,14 @@ export const newDataHandlers = (keyPrefix) => ({
     remove: newDataRemover(keyPrefix),
 });
 
+export const clear = async () => {
+    const allKeys = await AsyncStorage.getAllKeys();
+    const allDumpKeys = allKeys.filter(
+        (i) => !i.startsWith("_"),
+    );
+    await AsyncStorage.multiRemove(allDumpKeys);
+};
+
 export const dump = async () => {
     const allKeys = await AsyncStorage.getAllKeys();
     const allDumpKeys = allKeys.filter(
