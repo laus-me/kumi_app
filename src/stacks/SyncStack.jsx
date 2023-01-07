@@ -3,7 +3,8 @@ import * as React from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 
 import {SyncOverviewScreen, optionSyncOverviewScreen} from "../screens/SyncOverviewScreen";
-import {SyncImportScreen, optionSyncImportScreen} from "../screens/SyncImportScreen";
+import {SyncDataImportScreen, optionSyncDataImportScreen} from "../screens/SyncDataImportScreen";
+import {SyncDataResetScreen, optionSyncDataResetScreen} from "../screens/SyncDataResetScreen";
 
 const Stack = createStackNavigator();
 
@@ -21,9 +22,14 @@ export const SyncStack = () => {
                 component={SyncOverviewScreen}
             />
             <Stack.Screen
-                name="SyncImportScreen"
-                options={optionSyncImportScreen}
-                component={SyncImportScreen}
+                name="SyncDataImportScreen"
+                options={optionSyncDataImportScreen}
+                component={SyncDataImportScreen}
+            />
+            <Stack.Screen
+                name="SyncDataResetScreen"
+                options={optionSyncDataResetScreen}
+                component={SyncDataResetScreen}
             />
         </Stack.Navigator>
     );

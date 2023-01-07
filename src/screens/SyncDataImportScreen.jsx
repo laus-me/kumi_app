@@ -35,7 +35,7 @@ const StyledText = styled(Text);
 const StyledTextInput = styled(TextInput);
 const StyledButton = styled(Button);
 
-export const optionSyncImportScreen = {
+export const optionSyncDataImportScreen = {
     title: "匯入",
 };
 
@@ -73,7 +73,7 @@ const popAlertDanger = (message) => {
     });
 };
 
-export const SyncImportScreen = () => {
+export const SyncDataImportScreen = () => {
     const [isInitialized, setInitialized] = useState(false);
 
     const [keyChain, setKeyChain] = useState("");
@@ -100,7 +100,7 @@ export const SyncImportScreen = () => {
         const [oldApiKey, oldSyncKey] = state;
         const oldData = await dump();
 
-        await popAlertWarning("瑞凡，我們回不去了。App 資料將會被清除。");
+        await popAlertWarning("瑞凡，我們回不去了。App 資料正在被清除。");
         await clear();
 
         try {
@@ -113,8 +113,8 @@ export const SyncImportScreen = () => {
         } catch (e) {
             popAlertDanger(
                 e.message === "empty_data" ?
-                    "可是，伺服器上這份同步金鑰的資料是空的耶，就讓過去來還原一切吧。Lumos..." :
-                    "這是薛丁格的同步金鑰，地域魔法訴說著它已經失效，而大魔術師正試著還原一切...",
+                    "可是，伺服器上這份同步金鑰的資料是空的耶。消除記憶魔法已失效" :
+                    "這是薛丁格的無效同步金鑰。失憶魔法訴說著自己已經失效...",
             );
             await Promise.all([
                 setApiKey(oldApiKey),
@@ -137,6 +137,9 @@ export const SyncImportScreen = () => {
                             setValue={setKeyChain}
                         />
                     </StyledView>
+                    <StyledText className="font-semibold text-red-500 py-2">
+                        一按下開始匯入資料，若匯入成功，那麼目前尚未備份的資料將會被之前備份的取代掉，並不會相互合併。
+                    </StyledText>
                     <StyledView className="mx-10">
                         <StyledButton
                             title="開始匯入"
