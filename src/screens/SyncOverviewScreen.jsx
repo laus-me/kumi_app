@@ -87,7 +87,7 @@ export const SyncOverviewScreen = (props) => {
     };
 
     const handleResetData = async () => {
-        await popAlertWarning("App 資料將被完全刪除");
+        await popAlertWarning("再見了，愛人。App 資料將被完全刪除。");
         await clearAll();
         await reloadAsync();
     };

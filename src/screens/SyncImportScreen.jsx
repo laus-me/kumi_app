@@ -21,6 +21,7 @@ import {
 import {
     restore,
     clear,
+    dump,
 } from "../storage";
 
 import {
@@ -90,33 +91,38 @@ export const SyncImportScreen = () => {
             return;
         }
 
-        await popAlertWarning("資料將會被清除");
-
         const state = await importKeyChain(keyChain);
         if (!state) {
             popAlertDanger("這份同步金鑰是假的啦");
             return;
         }
-        const [oldApiKey, oldSyncKey] = state;
 
+        const [oldApiKey, oldSyncKey] = state;
+        const oldData = await dump();
+
+        await popAlertWarning("瑞凡，我們回不去了。App 資料將會被清除。");
         await clear();
 
-        let dumpString;
         try {
-            dumpString = await download();
+            const dumpString = await download();
+            if (!dumpString) {
+                throw new Error("empty_data");
+            }
+            await restore(dumpString);
+            await reloadAsync();
         } catch (e) {
-            popAlertDanger("這是薛丁格的同步金鑰，大魔術師正在還原一切...");
-            await setApiKey(oldApiKey);
-            await setSyncKey(oldSyncKey);
+            popAlertDanger(
+                e.message === "empty_data" ?
+                    "可是，伺服器上這份同步金鑰的資料是空的耶，就讓過去來還原一切吧。Lumos..." :
+                    "這是薛丁格的同步金鑰，地域魔法訴說著它已經失效，而大魔術師正試著還原一切...",
+            );
+            await Promise.all([
+                setApiKey(oldApiKey),
+                setSyncKey(oldSyncKey),
+                restore(oldData),
+            ]);
             return;
         }
-        if (!dumpString) {
-            popAlertDanger("伺服器上沒有資料耶");
-            return;
-        }
-
-        await restore(dumpString);
-        await reloadAsync();
     };
 
     return (
