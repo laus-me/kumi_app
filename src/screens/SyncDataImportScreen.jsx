@@ -26,6 +26,7 @@ import {
 
 import {
     getApiKey,
+    getSyncKey,
     setApiKey,
     setSyncKey,
 } from "../storage/ClientStorage";
@@ -91,24 +92,23 @@ export const SyncDataImportScreen = () => {
             return;
         }
 
-        const state = await importKeyChain(keyChain);
-        if (!state) {
+        const oldApiKey = await getApiKey();
+        const oldSyncKey = await getSyncKey();
+        const oldData = await dump();
+
+        try {
+            await importKeyChain(keyChain);
+        } catch (e) {
             popAlertDanger("這份同步金鑰是假的啦");
             return;
         }
-
-        const [oldApiKey, oldSyncKey] = state;
-        const oldData = await dump();
 
         await popAlertWarning("瑞凡，我們回不去了。App 資料正在被清除。");
         await clear();
 
         try {
             const dumpString = await download();
-            if (!dumpString) {
-                throw new Error("empty_data");
-            }
-            await restore(dumpString);
+            await restore(dumpString, true);
             await reloadAsync();
         } catch (e) {
             popAlertDanger(
@@ -119,9 +119,8 @@ export const SyncDataImportScreen = () => {
             await Promise.all([
                 setApiKey(oldApiKey),
                 setSyncKey(oldSyncKey),
-                restore(oldData),
+                restore(oldData, false),
             ]);
-            return;
         }
     };
 

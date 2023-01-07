@@ -62,15 +62,13 @@ export const importKeyChain = async (keyChain) => {
     const [apiKey, syncKey] = keyChain.split("!");
 
     if (!(apiKey && syncKey)) {
-        return null;
+        throw new Error("invalid_key_chain");
     }
 
     await Promise.all([
         setApiKey(apiKey),
         setSyncKey(syncKey),
     ]);
-
-    return apiKey, syncKey;
 };
 
 export const exportKeyChain = async () => {

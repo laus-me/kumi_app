@@ -42,8 +42,14 @@ export const dump = async () => {
     return JSON.stringify(data);
 };
 
-export const restore = async (dataJson) => {
+export const restore = async (dataJson, verify) => {
+    if ((!dataJson) && verify) {
+        throw new Error("empty_data");
+    }
     const data = JSON.parse(dataJson);
+    if ((!(Array.isArray(data) && data.length)) && verify) {
+        throw new Error("empty_data");
+    }
     return await Promise.all(data.map(
         ([i, j]) => AsyncStorage.setItem(i, j),
     ));
