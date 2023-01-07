@@ -87,7 +87,7 @@ const TextBox = (props) => {
             <StyledText className="font-semibold text-gray-600 py-2">{name}</StyledText>
             <StyledTextInput
                 multiline
-                className="w-full min-h-[100px] max-h-[300px] h-28 appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg mt-2 py-2 px-4"
+                className="w-full min-h-[100px] max-h-[300px] h-28 appearance-none block bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg mt-2 py-2 px-4"
                 placeholder={placeholder}
                 spellCheck="false"
                 defaultValue={value}

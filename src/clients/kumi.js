@@ -18,7 +18,7 @@ client.interceptors.request.use(
         return config;
     },
     (error) => {
-        // Do something with request error
+        console.error(error);
         return Promise.reject(error);
     },
 );
