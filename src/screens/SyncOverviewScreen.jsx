@@ -89,14 +89,14 @@ export const SyncOverviewScreen = (props) => {
             <StyledView className="border border-r-8 px-3 py-3 text-md">
                 <StyledView className="pb-3">
                     <StyledButton
-                        title="匯出同步金鑰"
+                        title="匯出同步金鑰鏈"
                         onPress={handlePressExportKeys}
                         disabled={!isInitialized}
                     />
                 </StyledView>
                 <StyledView className="pb-3">
                     <StyledButton
-                        title="匯入先前的同步金鑰"
+                        title="匯入先前的同步金鑰鏈"
                         color="gray"
                         onPress={handlePressImportKeys}
                         disabled={!isInitialized}

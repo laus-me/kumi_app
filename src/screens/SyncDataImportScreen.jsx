@@ -88,7 +88,7 @@ export const SyncDataImportScreen = () => {
 
     const handlePressImport = async () => {
         if (!keyChain.length) {
-            popAlertDanger("沒有同步金鑰，我可是不會動的");
+            popAlertDanger("沒有同步金鑰鏈，我可是不會動的");
             return;
         }
 
@@ -99,7 +99,7 @@ export const SyncDataImportScreen = () => {
         try {
             await importKeyChain(keyChain);
         } catch (e) {
-            popAlertDanger("這份同步金鑰是假的啦");
+            popAlertDanger("這份同步金鑰鏈是假的啦");
             return;
         }
 
@@ -113,8 +113,8 @@ export const SyncDataImportScreen = () => {
         } catch (e) {
             popAlertDanger(
                 e.message === "empty_data" ?
-                    "可是，伺服器上這份同步金鑰的資料是空的耶。消除記憶魔法已失效" :
-                    "這是薛丁格的無效同步金鑰。失憶魔法訴說著自己已經失效...",
+                    "可是，伺服器上這份同步金鑰鏈的資料是空的耶。消除記憶魔法已失效" :
+                    "這是薛丁格的無效同步金鑰鏈。失憶魔法訴說著自己已經失效...",
             );
             await Promise.all([
                 setApiKey(oldApiKey),
@@ -131,7 +131,7 @@ export const SyncDataImportScreen = () => {
                     <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
                         <InputBox
                             name="同步金鑰鏈"
-                            placeholder="請告訴我那串很純的神奇魔法同步金鑰"
+                            placeholder="請告訴我那串很純的神奇魔法同步金鑰鏈"
                             value={keyChain}
                             setValue={setKeyChain}
                         />
