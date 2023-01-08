@@ -32,7 +32,7 @@ export const optionSyncOverviewScreen = {
 
 const popNoticeInfo = (title, textBody) => {
     Toast.show({
-        autoClose: 5_000,
+        autoClose: 5000,
         type: ALERT_TYPE.SUCCESS,
         title,
         textBody,
@@ -41,7 +41,7 @@ const popNoticeInfo = (title, textBody) => {
 
 const popNoticeError = (title, textBody) => {
     Toast.show({
-        autoClose: 5_000,
+        autoClose: 5000,
         type: ALERT_TYPE.DANGER,
         title,
         textBody,

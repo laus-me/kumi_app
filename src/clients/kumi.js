@@ -8,7 +8,7 @@ import {
 
 const client = axios.create({
     baseURL: Constants.expoConfig.extra.apiBaseURL,
-    timeout: 15_000,
+    timeout: 15000,
 });
 
 client.interceptors.request.use(

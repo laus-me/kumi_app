@@ -39,7 +39,7 @@ const AppRoot = () => {
         initSync()
             .then(() => {
                 console.info("initSync OK");
-                setTimeout(doUpload, 3_000);
+                setTimeout(doUpload, 3000);
             })
             .catch((e) => {
                 console.error(e);
