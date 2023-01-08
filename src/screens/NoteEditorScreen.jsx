@@ -24,6 +24,8 @@ import {
     TextInput,
     Button,
     TouchableOpacity,
+    TouchableWithoutFeedback,
+    Keyboard,
     Platform,
 } from "react-native";
 
@@ -308,77 +310,79 @@ const NoteEditorScreen = (props) => {
 
     return (
         <AlertNotificationRoot>
-            <StyledScrollView className="container">
-                <KeyboardAvoidingView behavior={keyboardAvoidingViewBehavior}>
-                    <StyledView className="bg-white py-1 px-3 mb-5">
-                        <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                            <InputBox
-                                name="標題"
-                                placeholder="您想讓我提醒您些什麼？"
-                                value={title}
-                                setValue={setTitle}
-                            />
-                        </StyledView>
-                        <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                            <Switcher
-                                name="啟用提醒"
-                                value={isNotificationEnabled}
-                                setValue={setNotificationEnabled}
-                            />
-                        </StyledView>
-                        {isNotificationEnabled && (
-                            <StyledView>
-                                <DateSelector
-                                    name="開始提醒時間"
-                                    value={notificationStart}
-                                    setValue={setNotificationStart}
-                                />
-                                <DateSelector
-                                    name="結束提醒時間"
-                                    value={notificationEnd}
-                                    setValue={setNotificationEnd}
+            <KeyboardAvoidingView behavior={keyboardAvoidingViewBehavior}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <StyledScrollView className="container">
+                        <StyledView className="bg-white py-1 px-3 mb-5">
+                            <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                                <InputBox
+                                    name="標題"
+                                    placeholder="您想讓我提醒您些什麼？"
+                                    value={title}
+                                    setValue={setTitle}
                                 />
                             </StyledView>
-                        )}
-                        <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                            <TextBox
-                                name="備註"
-                                placeholder="是因為什麼重要的人嗎？"
-                                value={description}
-                                setValue={setDescription}
-                            />
-                        </StyledView>
-                        <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                            <Switcher
-                                name="成為板上釘釘"
-                                value={isPinEnabled}
-                                setValue={setPinEnabled}
-                            />
-                        </StyledView>
-                    </StyledView>
-                    <StyledView className="flex flex-row justify-around bg-white py-3 px-3">
-                        <StyledButton
-                            title="取消"
-                            color="gray"
-                            onPress={handleCancel}
-                        />
-                        {
-                            currentItem.id && (
-                                <StyledButton
-                                    title="刪除"
-                                    color="red"
-                                    onPress={handleDelete}
+                            <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                                <Switcher
+                                    name="啟用提醒"
+                                    value={isNotificationEnabled}
+                                    setValue={setNotificationEnabled}
                                 />
-                            )
-                        }
-                        <StyledButton
-                            title="儲存"
-                            color="black"
-                            onPress={handleSave}
-                        />
-                    </StyledView>
-                </KeyboardAvoidingView>
-            </StyledScrollView>
+                            </StyledView>
+                            {isNotificationEnabled && (
+                                <StyledView>
+                                    <DateSelector
+                                        name="開始提醒時間"
+                                        value={notificationStart}
+                                        setValue={setNotificationStart}
+                                    />
+                                    <DateSelector
+                                        name="結束提醒時間"
+                                        value={notificationEnd}
+                                        setValue={setNotificationEnd}
+                                    />
+                                </StyledView>
+                            )}
+                            <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                                <TextBox
+                                    name="備註"
+                                    placeholder="是因為什麼重要的人嗎？"
+                                    value={description}
+                                    setValue={setDescription}
+                                />
+                            </StyledView>
+                            <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                                <Switcher
+                                    name="成為板上釘釘"
+                                    value={isPinEnabled}
+                                    setValue={setPinEnabled}
+                                />
+                            </StyledView>
+                        </StyledView>
+                        <StyledView className="flex flex-row justify-around bg-white py-3 px-3">
+                            <StyledButton
+                                title="取消"
+                                color="gray"
+                                onPress={handleCancel}
+                            />
+                            {
+                                currentItem.id && (
+                                    <StyledButton
+                                        title="刪除"
+                                        color="red"
+                                        onPress={handleDelete}
+                                    />
+                                )
+                            }
+                            <StyledButton
+                                title="儲存"
+                                color="black"
+                                onPress={handleSave}
+                            />
+                        </StyledView>
+                    </StyledScrollView>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
         </AlertNotificationRoot>
     );
 };
