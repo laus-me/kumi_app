@@ -118,7 +118,7 @@ const DateSelector = (props) => {
                     is24Hour={true}
                     onChange={handleChange}
                 />
-                <StyledView className="absolute left-3 top-2">
+                <StyledView className="absolute left-3 top-[3px]">
                     <CalendarIcon className="w-6 h-6"/>
                 </StyledView>
             </>);
@@ -130,7 +130,7 @@ const DateSelector = (props) => {
                 defaultValue={value}
                 onChangeText={setValue}
             />
-            <StyledView className="absolute left-3 top-2">
+            <StyledView className="absolute left-3 top-[5px]">
                 <CalendarIcon className="w-6 h-6"/>
             </StyledView>
         </>),
