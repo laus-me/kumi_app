@@ -1,17 +1,24 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {useDispatch} from "react-redux";
 
 import dayjs from "dayjs";
 
-import {setNoteModified} from "../redux/actions/NoteAction";
+import {
+    DATETIME_FORMAT,
+} from "../const";
+
+import {
+    setNoteModified,
+} from "../redux/actions/NoteAction";
 
 import {
     setNote,
     removeNote,
 } from "../storage/NoteStorage";
 
-import {View, Text, TextInput, Button} from "react-native";
+import {View, Text, TextInput, Button, TouchableOpacity, Platform} from "react-native";
 import {styled} from "nativewind";
+import DateTimePicker, {DateTimePickerAndroid} from "@react-native-community/datetimepicker";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 import {
@@ -28,6 +35,7 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 const StyledTextInput = styled(TextInput);
 const StyledButton = styled(Button);
+const StyledTouchableOpacity = styled(TouchableOpacity);
 
 const InputBox = (props) => {
     const {name, placeholder, value, setValue} = props;
@@ -46,19 +54,67 @@ const InputBox = (props) => {
 
 const DateSelector = (props) => {
     const {name, value, setValue} = props;
-    return (
-        <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-            <StyledText className="font-semibold text-gray-600 py-2">{name}</StyledText>
-            <StyledView className="relative focus-within:text-gray-600 text-gray-400">
-                <StyledTextInput
-                    placeholder="2002/03/12 13:00"
-                    className="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                    defaultValue={value}
-                    onChangeText={setValue}
+    const [date, setDate] = useState(new Date());
+
+    useEffect(() => {
+        setValue(dayjs(date).format(DATETIME_FORMAT));
+    }, [date]);
+
+    const onDatePickup = (_, selectedDate) => {
+        setDate(selectedDate);
+    };
+
+    const picker = {
+        "android": () => {
+            const showMode = (currentMode) => {
+                DateTimePickerAndroid.open({
+                    value: date,
+                    onChange: onDatePickup,
+                    mode: currentMode,
+                    is24Hour: true,
+                });
+            };
+            return (<>
+                <StyledTouchableOpacity onPress={showMode}>
+                    {value}
+                </StyledTouchableOpacity>
+                <StyledView className="absolute left-3 top-2">
+                    <CalendarIcon className="w-6 h-6"/>
+                </StyledView>
+            </>);
+        },
+        "ios": () => {
+            console.log(date);
+            return (<>
+                <DateTimePicker
+                    mode="datetime"
+                    value={date}
+                    is24Hour={true}
+                    onChange={onDatePickup}
                 />
                 <StyledView className="absolute left-3 top-2">
                     <CalendarIcon className="w-6 h-6"/>
                 </StyledView>
+            </>);
+        },
+        "default": () => (<>
+            <StyledTextInput
+                placeholder="2002/03/12 13:00"
+                className="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                defaultValue={value}
+                onChangeText={setValue}
+            />
+            <StyledView className="absolute left-3 top-2">
+                <CalendarIcon className="w-6 h-6"/>
+            </StyledView>
+        </>),
+    };
+
+    return (
+        <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+            <StyledText className="font-semibold text-gray-600 py-2">{name}</StyledText>
+            <StyledView className="relative focus-within:text-gray-600 text-gray-400">
+                {(picker[Platform.OS]||picker["default"])()}
             </StyledView>
         </StyledView>
     );
@@ -168,7 +224,7 @@ const NoteEditorScreen = (props) => {
 
         if (item.isNotificationEnabled) {
             const currentTime = dayjs();
-            const startTime = dayjs(item.notificationStart, "YYYY/MM/DD HH:mm", true);
+            const startTime = dayjs(item.notificationStart, DATETIME_FORMAT, true);
             if (!startTime.isValid()) {
                 popAlertDanger("開始提醒時間是錯的！");
                 return;
@@ -177,7 +233,7 @@ const NoteEditorScreen = (props) => {
                 popAlertDanger("開始提醒時間竟然比現在還要早");
                 return;
             }
-            const endTime = dayjs(item.notificationEnd, "YYYY/MM/DD HH:mm", true);
+            const endTime = dayjs(item.notificationEnd, DATETIME_FORMAT, true);
             if (!endTime.isValid()) {
                 popAlertDanger("結束提醒時間是錯的！");
                 return;
@@ -190,8 +246,8 @@ const NoteEditorScreen = (props) => {
                 popAlertDanger("結束提醒時間沒辦法比開始提醒時間還要早啦");
                 return;
             }
-            item.notificationStart = endTime.format("YYYY/MM/DD HH:mm");
-            item.notificationEnd = endTime.format("YYYY/MM/DD HH:mm");
+            item.notificationStart = endTime.format(DATETIME_FORMAT);
+            item.notificationEnd = endTime.format(DATETIME_FORMAT);
         } else {
             item.notificationStart = "";
             item.notificationEnd = "";

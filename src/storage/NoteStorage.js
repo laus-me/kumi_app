@@ -1,7 +1,13 @@
 import SnowflakeId from "snowflake-id";
 import dayjs from "dayjs";
 
-import {newDataHandlers} from "./index";
+import {
+    DATETIME_FORMAT,
+} from "../const";
+
+import {
+    newDataHandlers,
+} from "./index";
 
 import {
     create as createNotification,
@@ -33,12 +39,12 @@ export const setNote = async (item, itemId = null, isNotificationUpdated = false
 
     item.isResolved = item.isResolved || false;
 
-    const currentTimeString = dayjs().format("YYYY/MM/DD HH:mm:ss");
+    const currentTimeString = dayjs().format(DATETIME_FORMAT);
     item.updatedTime = currentTimeString;
     item.createdTime = item.createdTime || currentTimeString;
 
     if (isNotificationUpdated) {
-        if (item.isNotificationEnabled) {
+        if (item.isNotificationEnabled && !item.isResolved) {
             await createNotification({
                 itemId,
                 title: item.title,

@@ -6,6 +6,10 @@ import dayjs from "dayjs";
 import CryptoES from "crypto-es";
 
 import {
+    DATETIME_FORMAT,
+} from "../const";
+
+import {
     getApiKey,
     getSyncKey,
     getLastSyncTime,
@@ -44,7 +48,7 @@ export const upload = async (dumpString) => {
         padding: CryptoES.pad.Pkcs7,
     });
     await putSyncData({content: chips.toString()});
-    await setLastSyncTime(dayjs().format("YYYY/MM/DD HH:mm:ss"));
+    await setLastSyncTime(dayjs().format(DATETIME_FORMAT));
 };
 
 export const download = async () => {
