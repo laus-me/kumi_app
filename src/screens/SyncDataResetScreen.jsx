@@ -10,7 +10,6 @@ import {styled} from "nativewind";
 import {
     ALERT_TYPE,
     Dialog,
-    AlertNotificationRoot,
 } from "react-native-alert-notification";
 
 import {
@@ -43,21 +42,19 @@ export const SyncDataResetScreen = () => {
     };
 
     return (
-        <AlertNotificationRoot>
-            <StyledView className="container">
-                <StyledView className="bg-white py-10 px-3">
-                    <StyledText className="font-semibold text-center text-red-500 py-2 mb-8">
+        <StyledView className="container">
+            <StyledView className="bg-white py-10 px-3">
+                <StyledText className="font-semibold text-center text-red-500 py-2 mb-8">
                         按下「確定清除」後，目前的所有資料跟金鑰都會消失。
-                    </StyledText>
-                    <StyledView className="mx-10">
-                        <StyledButton
-                            title="確定清除"
-                            color="black"
-                            onPress={handlePresssSure}
-                        />
-                    </StyledView>
+                </StyledText>
+                <StyledView className="mx-10">
+                    <StyledButton
+                        title="確定清除"
+                        color="black"
+                        onPress={handlePresssSure}
+                    />
                 </StyledView>
             </StyledView>
-        </AlertNotificationRoot>
+        </StyledView>
     );
 };

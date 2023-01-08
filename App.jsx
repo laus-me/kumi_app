@@ -12,6 +12,10 @@ import {
     init as initSync, upload,
 } from "./src/workers/sync";
 
+import {
+    dump,
+} from "./src/storage";
+
 import {store} from "./src/redux/store";
 
 import {HomeStack, optionHomeStack} from "./src/stacks/HomeStack";
@@ -24,10 +28,18 @@ const Stack = createStackNavigator();
 
 const AppRoot = () => {
     useEffect(() => {
+        const doUpload = async () => {
+            try {
+                const dumpString = await dump();
+                await upload(dumpString);
+            } catch (e) {
+                console.error(e);
+            }
+        };
         initSync()
             .then(() => {
                 console.info("initSync OK");
-                setTimeout(upload, 3_000);
+                setTimeout(doUpload, 3_000);
             })
             .catch((e) => {
                 console.error(e);

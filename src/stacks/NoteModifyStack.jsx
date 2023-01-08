@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import {AlertNotificationRoot} from "react-native-alert-notification";
+
 import NoteEditorScreen from "../screens/NoteEditorScreen";
 
 export const optionNoteModifyStack = {
@@ -15,9 +17,11 @@ export const NoteModifyStack = (props) => {
     const {currentItem} = route.params;
 
     return (
-        <NoteEditorScreen
-            currentItem={currentItem}
-            navigation={navigation}
-        />
+        <AlertNotificationRoot>
+            <NoteEditorScreen
+                currentItem={currentItem}
+                navigation={navigation}
+            />
+        </AlertNotificationRoot>
     );
 };

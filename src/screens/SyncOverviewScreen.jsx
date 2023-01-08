@@ -10,6 +10,11 @@ import {
 } from "../workers/sync";
 
 import {
+    ALERT_TYPE,
+    Toast,
+} from "react-native-alert-notification";
+
+import {
     dump,
 } from "../storage";
 
@@ -23,6 +28,24 @@ const StyledButton = styled(Button);
 
 export const optionSyncOverviewScreen = {
     title: "總覽",
+};
+
+const popNoticeInfo = (title, textBody) => {
+    Toast.show({
+        autoClose: 5_000,
+        type: ALERT_TYPE.SUCCESS,
+        title,
+        textBody,
+    });
+};
+
+const popNoticeError = (title, textBody) => {
+    Toast.show({
+        autoClose: 5_000,
+        type: ALERT_TYPE.DANGER,
+        title,
+        textBody,
+    });
 };
 
 export const SyncOverviewScreen = (props) => {
@@ -47,11 +70,13 @@ export const SyncOverviewScreen = (props) => {
         try {
             const dumpString = await dump();
             await upload(dumpString);
+            const i = await getLastSyncTimeString();
+            popNoticeInfo("同步成功", i);
+            setLastSyncTimeString(i);
         } catch (e) {
+            popNoticeError("同步失敗", "等一下再試試看吧...");
             console.error(e);
         }
-        const i = await getLastSyncTimeString();
-        setLastSyncTimeString(i);
     };
 
     const handlePressExportKeys = async () => {
