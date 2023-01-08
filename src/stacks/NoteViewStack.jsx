@@ -3,7 +3,7 @@ import * as React from "react";
 import NoteViewerScreen from "../screens/NoteViewerScreen";
 
 export const optionNoteViewStack = {
-    title: "待辦事項"
+    title: "待辦事項",
 };
 
 export const NoteViewStack = (props) => {
@@ -19,5 +19,5 @@ export const NoteViewStack = (props) => {
             currentItem={currentItem}
             navigation={navigation}
         />
-    )
-}
+    );
+};

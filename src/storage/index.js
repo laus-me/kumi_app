@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const getStorageKey = (...keys) => keys.join("_")
+const getStorageKey = (...keys) => keys.join("_");
 
 export const newDataReader = (keyPrefix) => async (key) => {
     const storageKey = getStorageKey(keyPrefix, key);
@@ -22,3 +22,35 @@ export const newDataHandlers = (keyPrefix) => ({
     write: newDataWriter(keyPrefix),
     remove: newDataRemover(keyPrefix),
 });
+
+export const clearAll = () => AsyncStorage.clear();
+
+export const clear = async () => {
+    const allKeys = await AsyncStorage.getAllKeys();
+    const allDumpKeys = allKeys.filter(
+        (i) => !i.startsWith("_"),
+    );
+    await AsyncStorage.multiRemove(allDumpKeys);
+};
+
+export const dump = async () => {
+    const allKeys = await AsyncStorage.getAllKeys();
+    const allDumpKeys = allKeys.filter(
+        (i) => !i.startsWith("_"),
+    );
+    const data = await AsyncStorage.multiGet(allDumpKeys);
+    return JSON.stringify(data);
+};
+
+export const restore = async (dataJson, verify) => {
+    if ((!dataJson) && verify) {
+        throw new Error("empty_data");
+    }
+    const data = JSON.parse(dataJson);
+    if ((!(Array.isArray(data) && data.length)) && verify) {
+        throw new Error("empty_data");
+    }
+    return await Promise.all(data.map(
+        ([i, j]) => AsyncStorage.setItem(i, j),
+    ));
+};

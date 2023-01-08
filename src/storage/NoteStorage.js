@@ -1,14 +1,20 @@
 import SnowflakeId from "snowflake-id";
 import dayjs from "dayjs";
 
-import {newDataHandlers} from "./index";
+import {
+    DATETIME_FORMAT,
+} from "../const";
+
+import {
+    newDataHandlers,
+} from "./index";
 
 import {
     create as createNotification,
     cancel as cancelNotification,
 } from "../notifications/NoteNotification";
 
-const {read, write} = newDataHandlers("note_storage");
+const {read, write} = newDataHandlers("note");
 
 const snowflake = new SnowflakeId();
 const noteKey = "notes";
@@ -33,18 +39,18 @@ export const setNote = async (item, itemId = null, isNotificationUpdated = false
 
     item.isResolved = item.isResolved || false;
 
-    const currentTimeString = dayjs().format("YYYY/MM/DD HH:mm:ss")
+    const currentTimeString = dayjs().format(DATETIME_FORMAT);
     item.updatedTime = currentTimeString;
     item.createdTime = item.createdTime || currentTimeString;
 
     if (isNotificationUpdated) {
-        if (item.isNotificationEnabled) {
+        if (item.isNotificationEnabled && !item.isResolved) {
             await createNotification({
                 itemId,
                 title: item.title,
                 body: item.description || "這裡是個號稱宇宙無敵非常重要的超級提醒！",
-                date: new Date(item.notificationStart)
-            })
+                date: new Date(item.notificationStart),
+            });
         } else {
             await cancelNotification(itemId);
         }

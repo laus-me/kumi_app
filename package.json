@@ -7,8 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "eslint \"src/**/*.{js,jsx}\"",
-    "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix"
+    "lint": "eslint \"App.{js,jsx}\" \"src/**/*.{js,jsx}\"",
+    "lint:fix": "eslint \"App.{js,jsx}\" \"src/**/*.{js,jsx}\" --fix"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.17.3",
@@ -18,12 +18,16 @@
     "@react-navigation/native-stack": "^6.9.7",
     "@react-navigation/stack": "^6.3.10",
     "@reduxjs/toolkit": "^1.9.1",
+    "axios": "^1.2.2",
     "classnames": "^2.3.2",
+    "crypto-es": "^1.2.7",
     "dayjs": "^1.11.7",
     "eslint-config-google": "^0.14.0",
     "expo": "46.0.8",
-    "expo-modules-core": "^1.0.4",
+    "expo-constants": "~13.2.4",
+    "expo-modules-core": "^0.11.10",
     "expo-notifications": "~0.16.1",
+    "expo-random": "~12.3.0",
     "expo-status-bar": "1.4.0",
     "expo-updates": "~0.14.6",
     "nativewind": "latest",
@@ -43,7 +47,8 @@
     "react-native-web": "0.18.7",
     "react-redux": "^8.0.5",
     "redux": "^4.2.0",
-    "snowflake-id": "^1.1.0"
+    "snowflake-id": "^1.1.0",
+    "@react-native-community/datetimepicker": "6.2.0"
   },
   "devDependencies": {
     "@babel/core": "7.12.9",

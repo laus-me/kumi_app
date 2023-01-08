@@ -1,13 +1,13 @@
-import { PermissionStatus } from 'expo-modules-core';
+import {PermissionStatus} from "expo-modules-core";
 
 import {
     requestPermissionsAsync,
-} from 'expo-notifications';
+} from "expo-notifications";
 
 export const request = async () => {
-    const { status } = await requestPermissionsAsync();
+    const {status} = await requestPermissionsAsync();
     if (status === PermissionStatus.GRANTED) {
-        console.info('Notification permissions granted.')
+        console.info("Notification permissions granted.");
     }
     return status;
 };

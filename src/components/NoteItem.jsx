@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useDispatch} from 'react-redux';
+import {useDispatch} from "react-redux";
 import PropTypes from "prop-types";
 
 import dayjs from "dayjs";
@@ -40,9 +40,9 @@ const NoteItem = (props) => {
         updatedTime,
     } = props;
 
-    const isExpired = isNotificationEnabled
-        ? dayjs().isAfter(dayjs(notificationEnd))
-        : null;
+    const isExpired = isNotificationEnabled ?
+        dayjs().isAfter(dayjs(notificationEnd)) :
+        null;
 
     const collectInputItem = () => ({
         title,
@@ -71,7 +71,7 @@ const NoteItem = (props) => {
     const handlePressBar = () => {
         const item = collectInputItem();
         navigation.navigate("NoteViewStack", {
-            currentItem: {id: itemId, ...item}
+            currentItem: {id: itemId, ...item},
         });
     };
 
@@ -94,22 +94,22 @@ const NoteItem = (props) => {
                 onPress={handlePressBar}
             >
                 <StyledView>
-                    <StyledText className="text-black">
+                    <StyledText className="text-slate-900">
                         {title}
                     </StyledText>
                 </StyledView>
                 <StyledView className="grow w-full select-none cursor-pointer">
                     <StyledText className="text-gray-600">
                         {
-                            isResolved
-                                ? "歐耶已經完成了"
-                                : isNotificationEnabled
-                                    ? (
-                                        isExpired
-                                            ? `完蛋了！提醒已經過期（${notificationEnd}）`
-                                            : `提醒啟動！（${notificationStart}～${notificationEnd}）`
-                                    )
-                                    : "要記得完成呦"
+                            isResolved ?
+                                "歐耶已經完成了" :
+                                isNotificationEnabled ?
+                                    (
+                                        isExpired ?
+                                            `完蛋了！提醒已經過期（${notificationEnd}）` :
+                                            `提醒啟動！（${notificationStart}～${notificationEnd}）`
+                                    ) :
+                                    "要記得完成呦"
                         }
                     </StyledText>
                 </StyledView>
