@@ -94,7 +94,7 @@ const NoteItem = (props) => {
                 onPress={handlePressBar}
             >
                 <StyledView>
-                    <StyledText className="text-black">
+                    <StyledText className="text-slate-900">
                         {title}
                     </StyledText>
                 </StyledView>

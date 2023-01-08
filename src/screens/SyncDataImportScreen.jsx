@@ -4,7 +4,15 @@ import {
     reloadAsync,
 } from "expo-updates";
 
-import {View, Text, TextInput, Button} from "react-native";
+import {
+    View,
+    Text,
+    TextInput,
+    Button,
+    TouchableWithoutFeedback,
+    Keyboard,
+} from "react-native";
+
 import {styled} from "nativewind";
 
 import {
@@ -124,29 +132,31 @@ export const SyncDataImportScreen = () => {
 
     return (
         <AlertNotificationRoot>
-            <StyledView className="container">
-                <StyledView className="bg-white py-10 px-3">
-                    <StyledView className="flex-auto w-full text-xs space-y-2 mb-3">
-                        <InputBox
-                            name="同步金鑰鏈"
-                            placeholder="請告訴我那串很純的神奇魔法同步金鑰鏈"
-                            value={keyChain}
-                            setValue={setKeyChain}
-                        />
-                    </StyledView>
-                    <StyledText className="font-semibold text-red-500 mb-3">
-                        一按下開始匯入資料，若匯入成功，那麼目前尚未備份的資料將會被之前備份的取代掉，並不會相互合併。
-                    </StyledText>
-                    <StyledView className="mx-10">
-                        <StyledButton
-                            title="開始匯入"
-                            color="black"
-                            onPress={handlePressImport}
-                            disabled={!isInitialized}
-                        />
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <StyledView className="container">
+                    <StyledView className="bg-white py-10 px-3">
+                        <StyledView className="flex-auto w-full text-xs space-y-2 mb-5">
+                            <InputBox
+                                name="同步金鑰鏈"
+                                placeholder="請告訴我那串很純的神奇魔法同步金鑰鏈"
+                                value={keyChain}
+                                setValue={setKeyChain}
+                            />
+                        </StyledView>
+                        <StyledText className="font-semibold text-red-500 mb-10">
+                            一但按下「開始匯入」，若資料匯入成功，那麼目前尚未備份的資料將會被之前備份的取代掉，並不會相互合併。
+                        </StyledText>
+                        <StyledView className="mx-10">
+                            <StyledButton
+                                title="開始匯入"
+                                color="black"
+                                onPress={handlePressImport}
+                                disabled={!isInitialized}
+                            />
+                        </StyledView>
                     </StyledView>
                 </StyledView>
-            </StyledView>
+            </TouchableWithoutFeedback>
         </AlertNotificationRoot>
     );
 };

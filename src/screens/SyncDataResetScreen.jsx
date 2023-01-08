@@ -46,8 +46,8 @@ export const SyncDataResetScreen = () => {
         <AlertNotificationRoot>
             <StyledView className="container">
                 <StyledView className="bg-white py-10 px-3">
-                    <StyledText className="font-semibold text-center text-red-500 py-2 mb-3">
-                        一按下確定清除，目前的所有資料跟金鑰都會消失。
+                    <StyledText className="font-semibold text-center text-red-500 py-2 mb-8">
+                        按下「確定清除」後，目前的所有資料跟金鑰都會消失。
                     </StyledText>
                     <StyledView className="mx-10">
                         <StyledButton

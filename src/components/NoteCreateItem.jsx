@@ -32,7 +32,7 @@ const NoteCreateItem = (props) => {
                 className="grow select-none cursor-pointer"
             >
                 <StyledView>
-                    <StyledText className="text-black">
+                    <StyledText className="text-slate-900">
                         建立新的提醒事項
                     </StyledText>
                 </StyledView>
