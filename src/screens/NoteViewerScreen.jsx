@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 
 import {setNoteModified} from "../redux/actions/NoteAction";
 
-import {Button, Text, TouchableOpacity, View} from "react-native";
+import {View, ScrollView, Text, TouchableOpacity, Button} from "react-native";
 import {styled} from "nativewind";
 
 import {setNote} from "../storage/NoteStorage";
@@ -11,6 +11,7 @@ import {setNote} from "../storage/NoteStorage";
 import {CheckCircleIcon, QuestionMarkCircleIcon} from "react-native-heroicons/outline";
 
 const StyledView = styled(View);
+const StyledScrollView = styled(ScrollView);
 const StyledText = styled(Text);
 const StyledTouchableOpacity = styled(TouchableOpacity);
 const StyledButton = styled(Button);
@@ -83,7 +84,7 @@ const NoteViewerScreen = (props) => {
     };
 
     return (
-        <StyledView className="container">
+        <StyledScrollView className="container">
             <StyledView className="bg-white flex flex-row px-5 py-6 mb-5">
                 <StyledTouchableOpacity
                     className="flex-none w-10 mr-3 cursor-pointer"
@@ -154,7 +155,7 @@ const NoteViewerScreen = (props) => {
                     onPress={handleOK}
                 />
             </StyledView>
-        </StyledView>
+        </StyledScrollView>
     );
 };
 

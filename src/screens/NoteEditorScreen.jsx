@@ -16,7 +16,17 @@ import {
     removeNote,
 } from "../storage/NoteStorage";
 
-import {View, Text, TextInput, Button, TouchableOpacity, Platform} from "react-native";
+import {
+    View,
+    ScrollView,
+    KeyboardAvoidingView,
+    Text,
+    TextInput,
+    Button,
+    TouchableOpacity,
+    Platform,
+} from "react-native";
+
 import {styled} from "nativewind";
 import DateTimePicker, {DateTimePickerAndroid} from "@react-native-community/datetimepicker";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -32,6 +42,7 @@ import {
 } from "react-native-heroicons/outline";
 
 const StyledView = styled(View);
+const StyledScrollView = styled(ScrollView);
 const StyledText = styled(Text);
 const StyledTextInput = styled(TextInput);
 const StyledButton = styled(Button);
@@ -54,43 +65,56 @@ const InputBox = (props) => {
 
 const DateSelector = (props) => {
     const {name, value, setValue} = props;
-    const [date, setDate] = useState(new Date());
+
+    const initDate = new Date();
+    const [date, setDate] = useState(initDate);
 
     useEffect(() => {
         setValue(dayjs(date).format(DATETIME_FORMAT));
     }, [date]);
 
-    const onDatePickup = (_, selectedDate) => {
-        setDate(selectedDate);
-    };
-
     const picker = {
         "android": () => {
-            const showMode = (currentMode) => {
+            const [currentMode, setCurrentMode] = useState("date");
+            const handleChange = (_, selectedDate) => {
+                setDate(selectedDate);
+                const isDateChanged = currentMode === "date";
+                setCurrentMode(isDateChanged ? "time" : "date");
+            };
+            useEffect(() => {
+                if (currentMode === "time") {
+                    showPickuper();
+                }
+            }, [currentMode]);
+            const showPickuper = () => {
                 DateTimePickerAndroid.open({
                     value: date,
-                    onChange: onDatePickup,
+                    onChange: handleChange,
                     mode: currentMode,
                     is24Hour: true,
                 });
             };
             return (<>
-                <StyledTouchableOpacity onPress={showMode}>
-                    {value}
+                <StyledTouchableOpacity
+                    className="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                    onPress={showPickuper}
+                >
+                    <StyledText className="text-gray-700">
+                        {value}
+                    </StyledText>
                 </StyledTouchableOpacity>
-                <StyledView className="absolute left-3 top-2">
-                    <CalendarIcon className="w-6 h-6"/>
-                </StyledView>
             </>);
         },
         "ios": () => {
-            console.log(date);
+            const handleChange = (_, selectedDate) => {
+                setDate(selectedDate);
+            };
             return (<>
                 <DateTimePicker
                     mode="datetime"
                     value={date}
                     is24Hour={true}
-                    onChange={onDatePickup}
+                    onChange={handleChange}
                 />
                 <StyledView className="absolute left-3 top-2">
                     <CalendarIcon className="w-6 h-6"/>
@@ -214,6 +238,8 @@ const NoteEditorScreen = (props) => {
         updatedTime,
     });
 
+    const keyboardAvoidingViewBehavior = Platform.OS === "ios" ? "padding" : "height";
+
     const handleSave = () => {
         const item = collectInputItem();
 
@@ -282,75 +308,77 @@ const NoteEditorScreen = (props) => {
 
     return (
         <AlertNotificationRoot>
-            <StyledView className="container">
-                <StyledView className="bg-white py-1 px-3 mb-5">
-                    <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                        <InputBox
-                            name="標題"
-                            placeholder="您想讓我提醒您些什麼？"
-                            value={title}
-                            setValue={setTitle}
-                        />
-                    </StyledView>
-                    <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                        <Switcher
-                            name="啟用提醒"
-                            value={isNotificationEnabled}
-                            setValue={setNotificationEnabled}
-                        />
-                    </StyledView>
-                    {isNotificationEnabled && (
-                        <StyledView>
-                            <DateSelector
-                                name="開始提醒時間"
-                                value={notificationStart}
-                                setValue={setNotificationStart}
-                            />
-                            <DateSelector
-                                name="結束提醒時間"
-                                value={notificationEnd}
-                                setValue={setNotificationEnd}
+            <StyledScrollView className="container">
+                <KeyboardAvoidingView behavior={keyboardAvoidingViewBehavior}>
+                    <StyledView className="bg-white py-1 px-3 mb-5">
+                        <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                            <InputBox
+                                name="標題"
+                                placeholder="您想讓我提醒您些什麼？"
+                                value={title}
+                                setValue={setTitle}
                             />
                         </StyledView>
-                    )}
-                    <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                        <TextBox
-                            name="備註"
-                            placeholder="是因為什麼重要的人嗎？"
-                            value={description}
-                            setValue={setDescription}
-                        />
-                    </StyledView>
-                    <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
-                        <Switcher
-                            name="成為板上釘釘"
-                            value={isPinEnabled}
-                            setValue={setPinEnabled}
-                        />
-                    </StyledView>
-                </StyledView>
-                <StyledView className="flex flex-row justify-around bg-white py-3 px-3">
-                    <StyledButton
-                        title="取消"
-                        color="gray"
-                        onPress={handleCancel}
-                    />
-                    {
-                        currentItem.id && (
-                            <StyledButton
-                                title="刪除"
-                                color="red"
-                                onPress={handleDelete}
+                        <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                            <Switcher
+                                name="啟用提醒"
+                                value={isNotificationEnabled}
+                                setValue={setNotificationEnabled}
                             />
-                        )
-                    }
-                    <StyledButton
-                        title="儲存"
-                        color="black"
-                        onPress={handleSave}
-                    />
-                </StyledView>
-            </StyledView>
+                        </StyledView>
+                        {isNotificationEnabled && (
+                            <StyledView>
+                                <DateSelector
+                                    name="開始提醒時間"
+                                    value={notificationStart}
+                                    setValue={setNotificationStart}
+                                />
+                                <DateSelector
+                                    name="結束提醒時間"
+                                    value={notificationEnd}
+                                    setValue={setNotificationEnd}
+                                />
+                            </StyledView>
+                        )}
+                        <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                            <TextBox
+                                name="備註"
+                                placeholder="是因為什麼重要的人嗎？"
+                                value={description}
+                                setValue={setDescription}
+                            />
+                        </StyledView>
+                        <StyledView className="flex-auto w-full mb-2 text-xs space-y-2">
+                            <Switcher
+                                name="成為板上釘釘"
+                                value={isPinEnabled}
+                                setValue={setPinEnabled}
+                            />
+                        </StyledView>
+                    </StyledView>
+                    <StyledView className="flex flex-row justify-around bg-white py-3 px-3">
+                        <StyledButton
+                            title="取消"
+                            color="gray"
+                            onPress={handleCancel}
+                        />
+                        {
+                            currentItem.id && (
+                                <StyledButton
+                                    title="刪除"
+                                    color="red"
+                                    onPress={handleDelete}
+                                />
+                            )
+                        }
+                        <StyledButton
+                            title="儲存"
+                            color="black"
+                            onPress={handleSave}
+                        />
+                    </StyledView>
+                </KeyboardAvoidingView>
+            </StyledScrollView>
         </AlertNotificationRoot>
     );
 };
