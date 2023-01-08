@@ -27,3 +27,6 @@ jobs:
 
       - name: 🚀 Build app (preview)
         run: eas build --non-interactive --platform android --profile preview
+
+      - name: 🚀 Build app (production)
+        run: eas build --non-interactive --platform android --profile production
